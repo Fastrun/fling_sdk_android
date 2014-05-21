@@ -1,6 +1,7 @@
 package com.fireflycast.cast;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import android.content.Context;
 import android.os.Looper;
@@ -50,6 +51,10 @@ public class Cast {
 	 * The main entry point for interacting with a Cast device.
 	 */
 	public interface CastApi {
+	    public String makeApplicationId(String url);
+	    
+	    public String makeApplicationId(String id, String url);
+	    
 		public void requestStatus(FireflyApiClient client) throws IOException,
 				IllegalStateException;
 
@@ -110,6 +115,24 @@ public class Cast {
 		 * Implementation of CastApi interface
 		 */
 		public static final class CastApiImpl_a implements CastApi {
+		    public String makeApplicationId(String appUrl) {
+		        String encode = URLEncoder.encode(appUrl);
+		        StringBuffer sb = new StringBuffer();
+		        sb.append("app:?uri=");
+		        sb.append(encode);
+                return sb.toString();
+            }
+
+		    public String makeApplicationId(String id, String msUrl) {
+		        String encode = URLEncoder.encode(msUrl);
+                StringBuffer sb = new StringBuffer();
+                sb.append("app:?id=");
+                sb.append(id);
+                sb.append("&ms=");
+                sb.append(encode);
+                return sb.toString();
+		    }
+		    
 			public void requestStatus(FireflyApiClient client)
 					throws IOException, IllegalStateException {
 				try {

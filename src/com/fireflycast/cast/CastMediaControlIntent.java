@@ -74,8 +74,7 @@ public class CastMediaControlIntent {
 //				throw new IllegalArgumentException("Invalid appliation ID: "
 //						+ applicationId);
 //			}
-		    String encode = URLEncoder.encode(applicationId);
-			sb.append("/").append(encode);
+			sb.append("/").append(applicationId);
 		}
 		if (namespaces != null) {
 			if (namespaces.isEmpty()) {

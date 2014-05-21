@@ -40,8 +40,7 @@ public final class DiscoveryCriteria_aty {
                         "Could not parse criteria from control category: ")).append(category).toString());
 
             case 2: // '\002'
-                String decode = URLDecoder.decode(parts[1]);
-                criteria.mAppid_b = decode;
+                criteria.mAppid_b = parts[1];
                 // fall through
 
             case 1: // '\001'
