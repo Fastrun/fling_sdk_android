@@ -61,7 +61,7 @@ public class CastMediaRouteProvider_awb extends MediaRouteProvider_nv {
                 {
                     CastDevice castdevice = awv1.mCastDevice_a;
                     CastDeviceControllerHelper_awu awu1 = (CastDeviceControllerHelper_awu) q
-                            .get(castdevice.getDeviceId_b());
+                            .get(castdevice.getDeviceId());
                     if (awu1 != null)
                     {
                         awu1.b = false;
@@ -93,7 +93,7 @@ public class CastMediaRouteProvider_awb extends MediaRouteProvider_nv {
                         castdevice
                     });
             CastDeviceControllerHelper_awu awu1 = (CastDeviceControllerHelper_awu) q.get(castdevice
-                    .getDeviceId_b());
+                    .getDeviceId());
             if (awu1 != null) {
                 awu1.b = true;
             }
@@ -108,7 +108,7 @@ public class CastMediaRouteProvider_awb extends MediaRouteProvider_nv {
                         castdevice
                     });
             CastDeviceControllerHelper_awu awu1 = (CastDeviceControllerHelper_awu) q.get(castdevice
-                    .getDeviceId_b());
+                    .getDeviceId());
             if (awu1 != null)
             {
                 awu1.b = false;
@@ -171,7 +171,7 @@ public class CastMediaRouteProvider_awb extends MediaRouteProvider_nv {
             @Override
             protected void setDeviceOffline_a(CastDevice castdevice) {
                 // TODO Auto-generated method stub
-                mMdnsDeviceScanner_n.setDeviceOffline_a(castdevice.getDeviceId_b());
+                mMdnsDeviceScanner_n.setDeviceOffline_a(castdevice.getDeviceId());
             }
 
             @Override
@@ -208,7 +208,7 @@ public class CastMediaRouteProvider_awb extends MediaRouteProvider_nv {
     public static CastDeviceController_axs createDeviceController_a(
             CastMediaRouteProvider_awb provider, CastRouteController_awn controller) {
         CastDevice castdevice = controller.mCastDevice_a;
-        String id = castdevice.getDeviceId_b();
+        String id = castdevice.getDeviceId();
         CastDeviceControllerHelper_awu awu1 = (CastDeviceControllerHelper_awu) provider.q.get(id);
         if (awu1 == null) {
             awu1 = new CastDeviceControllerHelper_awu(provider);
@@ -231,14 +231,14 @@ public class CastMediaRouteProvider_awb extends MediaRouteProvider_nv {
     }
 
     public static String getFriendlyName_a(CastDevice castdevice) {
-        return castdevice.getFriendlyName_d();
+        return castdevice.getFriendlyName();
     }
 
     private MediaRouteDescriptor_ns buildRouteDescriptorForDevice_a(DiscoveryCriteriaHelper_awv criteriaHelper) {
         CastDevice castdevice = criteriaHelper.mCastDevice_a;
         Set set = criteriaHelper.mDiscoveryCriteriaSet_b;
         CastDeviceControllerHelper_awu controllerHelper = (CastDeviceControllerHelper_awu) q.get(castdevice
-                .getDeviceId_b());
+                .getDeviceId());
         String statusText;
         boolean isConnecting;
         int volumeHandling;
@@ -266,11 +266,11 @@ public class CastMediaRouteProvider_awb extends MediaRouteProvider_nv {
             volume = 0;
         }
         if (TextUtils.isEmpty(statusText))
-            status = castdevice.getModleName_e();
+            status = castdevice.getModelName();
         else
             status = statusText;
         Bundle bundle = new Bundle();
-        castdevice.putInBundle_a(bundle);
+        castdevice.putInBundle(bundle);
         ArrayList arraylist = new ArrayList();
         IntentFilter intentfilter;
         for (Iterator iterator = set.iterator(); iterator.hasNext(); arraylist.add(intentfilter)) {
@@ -287,11 +287,11 @@ public class CastMediaRouteProvider_awb extends MediaRouteProvider_nv {
         }
 
         mLogs_k.d("buildRouteDescriptorForDevice: id=%s, description=%s, connecting=%b, volume=%d",
-                castdevice.getDeviceId_b(), castdevice.getFriendlyName_d(),
+                castdevice.getDeviceId(), castdevice.getFriendlyName(),
                 Boolean.valueOf(isConnecting),
                 Integer.valueOf(volume));
         MediaRouteDescriptorPrivateData_nt data = new MediaRouteDescriptorPrivateData_nt(
-                castdevice.getDeviceId_b(), castdevice.getFriendlyName_d());
+                castdevice.getDeviceId(), castdevice.getFriendlyName());
         data.mBundle_a.putString("status", status);
         data.mBundle_a.putBoolean("connecting", isConnecting);
         data.mBundle_a.putInt("volumeHandling", volumeHandling);
@@ -315,10 +315,10 @@ public class CastMediaRouteProvider_awb extends MediaRouteProvider_nv {
 
     static void addCastDevice_a(CastMediaRouteProvider_awb routeProvider, CastDevice castdevice, Set set) {
         DiscoveryCriteriaHelper_awv criteriaHelper = (DiscoveryCriteriaHelper_awv) routeProvider.mDiscoveryCriteriaMap_p.get(castdevice
-                .getDeviceId_b());
+                .getDeviceId());
         if (criteriaHelper != null) {
             Object aobj[] = new Object[1];
-            aobj[0] = castdevice.getFriendlyName_d();
+            aobj[0] = castdevice.getFriendlyName();
             mLogs_k.d("merging in criteria for existing device %s", aobj);
             Iterator iterator = set.iterator();
             do {
@@ -329,7 +329,7 @@ public class CastMediaRouteProvider_awb extends MediaRouteProvider_nv {
                     criteriaHelper.mDiscoveryCriteriaSet_b.add(criteria);
             } while (true);
         } else {
-            routeProvider.mDiscoveryCriteriaMap_p.put(castdevice.getDeviceId_b(), new DiscoveryCriteriaHelper_awv(castdevice, set));
+            routeProvider.mDiscoveryCriteriaMap_p.put(castdevice.getDeviceId(), new DiscoveryCriteriaHelper_awv(castdevice, set));
             if (routeProvider.r != null)
                 routeProvider.r.a(castdevice);
         }
@@ -366,7 +366,7 @@ public class CastMediaRouteProvider_awb extends MediaRouteProvider_nv {
 
     public static void b(CastMediaRouteProvider_awb awb1, CastRouteController_awn awn1) {
         CastDevice castdevice = awn1.mCastDevice_a;
-        String id = castdevice.getDeviceId_b();
+        String id = castdevice.getDeviceId();
         CastDeviceControllerHelper_awu awu1 = (CastDeviceControllerHelper_awu) awb1.q.get(id);
         if (awu1 != null) {
             awu1.e.remove(awn1);
@@ -387,7 +387,7 @@ public class CastMediaRouteProvider_awb extends MediaRouteProvider_nv {
     }
 
     private void b(CastDevice castdevice) {
-        mDiscoveryCriteriaMap_p.remove(castdevice.getDeviceId_b());
+        mDiscoveryCriteriaMap_p.remove(castdevice.getDeviceId());
         if (r != null)
             r.b(castdevice);
     }

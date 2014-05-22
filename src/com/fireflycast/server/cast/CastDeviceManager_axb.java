@@ -74,7 +74,7 @@ final class CastDeviceManager_axb implements CastSocketListener_atu {
     {
         Logs_avu avu1 = DeviceFilter_awz.getLogs_b();
         Object aobj[] = new Object[4];
-        aobj[0] = mCastDevice_b.getFriendlyName_d();
+        aobj[0] = mCastDevice_b.getFriendlyName();
         aobj[1] = namespace;
         aobj[2] = "receiver-0";
         aobj[3] = message;
@@ -196,9 +196,9 @@ final class CastDeviceManager_axb implements CastSocketListener_atu {
     {
         Logs_avu avu1 = DeviceFilter_awz.getLogs_b();
         Object aobj[] = new Object[4];
-        aobj[0] = mCastDevice_b.getHostIp_c().toString();
-        aobj[1] = Integer.valueOf(mCastDevice_b.getServicePort_g());
-        aobj[2] = mCastDevice_b.getFriendlyName_d();
+        aobj[0] = mCastDevice_b.getIpAddress().toString();
+        aobj[1] = Integer.valueOf(mCastDevice_b.getServicePort());
+        aobj[2] = mCastDevice_b.getFriendlyName();
         aobj[3] = Integer.valueOf(j);
         avu1.w("Connection to %s:%d (%s) failed with error %d", aobj);
 

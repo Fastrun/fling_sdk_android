@@ -1060,7 +1060,7 @@ public final class CastDeviceController_axs implements CastSocketListener_atu {
         try
         {
             mLogs_a.d("connecting socket now", new Object[0]);
-            mCastSocket_g.connect_a(mCastDevice.getHostIp_c(), mCastDevice.getServicePort_g());
+            mCastSocket_g.connect_a(mCastDevice.getIpAddress(), mCastDevice.getServicePort());
             return;
             // } catch (IOException ioexception)
         } catch (Exception ioexception)

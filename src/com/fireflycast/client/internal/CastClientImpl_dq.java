@@ -511,7 +511,7 @@ public class CastClientImpl_dq extends
 				.logd_b("getServiceFromBroker(): mLastApplicationId=%s, mLastSessionId=%s",
 						new Object[] { mApplicationId_xO, mSessionId_xP });
 		Bundle bundle = new Bundle();
-		mCastDevice_xG.putInBundle_a(bundle);
+		mCastDevice_xG.putInBundle(bundle);
 		bundle.putLong("com.fireflycast.cast.EXTRA_CAST_FLAGS", mCastFlags_xJ);
 		if (mApplicationId_xO != null) {
 			bundle.putString("last_application_id", mApplicationId_xO);

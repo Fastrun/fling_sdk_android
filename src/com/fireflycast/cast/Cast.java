@@ -51,64 +51,64 @@ public class Cast {
 	 * The main entry point for interacting with a Cast device.
 	 */
 	public interface CastApi {
-	    public String makeApplicationId(String url);
+	    public abstract String makeApplicationId(String appUrl);
 	    
-	    public String makeApplicationId(String id, String url);
+	    public abstract String makeApplicationId(String id, String msUrl);
 	    
-		public void requestStatus(FireflyApiClient client) throws IOException,
+		public abstract void requestStatus(FireflyApiClient client) throws IOException,
 				IllegalStateException;
 
-		public PendingResult<Status> sendMessage(FireflyApiClient client,
+		public abstract PendingResult<Status> sendMessage(FireflyApiClient client,
 				String namespace, String message);
 
-		public PendingResult<ApplicationConnectionResult> launchApplication(
+		public abstract PendingResult<ApplicationConnectionResult> launchApplication(
 				FireflyApiClient client, String applicationId);
 
-		public PendingResult<ApplicationConnectionResult> launchApplication(
-				FireflyApiClient paramGoogleApiClient, String applicationId,
+		public abstract PendingResult<ApplicationConnectionResult> launchApplication(
+				FireflyApiClient client, String applicationId,
 				boolean relaunchIfRunning);
 
-		public PendingResult<ApplicationConnectionResult> joinApplication(
-				FireflyApiClient paramGoogleApiClient, String applicationId,
+		public abstract PendingResult<ApplicationConnectionResult> joinApplication(
+				FireflyApiClient client, String applicationId,
 				String sessionId);
 
-		public PendingResult<ApplicationConnectionResult> joinApplication(
+		public abstract PendingResult<ApplicationConnectionResult> joinApplication(
 				FireflyApiClient client, String applicationId);
 
-		public PendingResult<ApplicationConnectionResult> joinApplication(
+		public abstract PendingResult<ApplicationConnectionResult> joinApplication(
 				FireflyApiClient client);
 
-		public PendingResult<Status> leaveApplication(FireflyApiClient client);
+		public abstract PendingResult<Status> leaveApplication(FireflyApiClient client);
 
-		public PendingResult<Status> stopApplication(FireflyApiClient client);
+		public abstract PendingResult<Status> stopApplication(FireflyApiClient client);
 
-		public PendingResult<Status> stopApplication(FireflyApiClient client,
+		public abstract PendingResult<Status> stopApplication(FireflyApiClient client,
 				String sessionId);
 
-		public void setVolume(FireflyApiClient client, double volume)
+		public abstract void setVolume(FireflyApiClient client, double volume)
 				throws IOException, IllegalArgumentException,
 				IllegalStateException;
 
-		public double getVolume(FireflyApiClient client)
+		public abstract double getVolume(FireflyApiClient client)
 				throws IllegalStateException;
 
-		public void setMute(FireflyApiClient client, boolean mute)
+		public abstract void setMute(FireflyApiClient client, boolean mute)
 				throws IOException, IllegalStateException;
 
-		public boolean isMute(FireflyApiClient client)
+		public abstract boolean isMute(FireflyApiClient client)
 				throws IllegalStateException;
 
-		public ApplicationMetadata getApplicationMetadata(
+		public abstract ApplicationMetadata getApplicationMetadata(
 				FireflyApiClient client) throws IllegalStateException;
 
-		public String getApplicationStatus(FireflyApiClient client)
+		public abstract String getApplicationStatus(FireflyApiClient client)
 				throws IllegalStateException;
 
-		public void setMessageReceivedCallbacks(FireflyApiClient client,
+		public abstract void setMessageReceivedCallbacks(FireflyApiClient client,
 				String namespace, MessageReceivedCallback callback)
 				throws IOException, IllegalStateException;
 
-		public void removeMessageReceivedCallbacks(FireflyApiClient client,
+		public abstract void removeMessageReceivedCallbacks(FireflyApiClient client,
 				String namespace) throws IOException, IllegalArgumentException;
 
 		/*
@@ -461,20 +461,20 @@ public class Cast {
 	 * Cast$ApplicationConnectionResult.smali : OK
 	 */
 	public interface ApplicationConnectionResult extends Result {
-		public ApplicationMetadata getApplicationMetadata();
+		public abstract ApplicationMetadata getApplicationMetadata();
 
-		public String getApplicationStatus();
+		public abstract String getApplicationStatus();
 
-		public String getSessionId();
+		public abstract String getSessionId();
 
-		public boolean getWasLaunched();
+		public abstract boolean getWasLaunched();
 	}
 
 	/*
 	 * Cast$MessageReceivedCallback.smali : OK
 	 */
 	public interface MessageReceivedCallback {
-		public void onMessageReceived(CastDevice castDevice, String namespace,
+		public abstract void onMessageReceived(CastDevice castDevice, String namespace,
 				String message);
 	}
 

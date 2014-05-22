@@ -31,7 +31,7 @@ public final class CastServerBinder_ayf extends FireflySrvBinder_bfd {
         CastService.getLogs_a().d("begin initCastService_a!", new Object[0]);
         try
         {
-            castdevice = CastDevice.getFromBundle_b(bundle);
+            castdevice = CastDevice.getFromBundle(bundle);
             lastApplicationId = bundle.getString("last_application_id");
             lastSessionId = bundle.getString("last_session_id");
         } catch (Exception exception) {

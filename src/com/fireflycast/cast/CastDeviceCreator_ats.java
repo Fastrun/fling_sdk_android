@@ -16,13 +16,13 @@ public final class CastDeviceCreator_ats implements
 	public static void buildParcel_a(CastDevice castdevice, Parcel parcel) {
 		int i = ParcelWritter_bhf.a(parcel, 20293);
 		ParcelWritter_bhf.b(parcel, 1, castdevice.getVersionCode_a());
-		ParcelWritter_bhf.a(parcel, 2, castdevice.getDeviceId_b(), false);
+		ParcelWritter_bhf.a(parcel, 2, castdevice.getDeviceId(), false);
 		ParcelWritter_bhf.a(parcel, 3, castdevice.mHostAddress_a, false);
-		ParcelWritter_bhf.a(parcel, 4, castdevice.getFriendlyName_d(), false);
-		ParcelWritter_bhf.a(parcel, 5, castdevice.getModleName_e(), false);
-		ParcelWritter_bhf.a(parcel, 6, castdevice.getDeviceVersion_f(), false);
-		ParcelWritter_bhf.b(parcel, 7, castdevice.getServicePort_g());
-		ParcelWritter_bhf.b(parcel, 8, castdevice.getIconList_h(), false);
+		ParcelWritter_bhf.a(parcel, 4, castdevice.getFriendlyName(), false);
+		ParcelWritter_bhf.a(parcel, 5, castdevice.getModelName(), false);
+		ParcelWritter_bhf.a(parcel, 6, castdevice.getDeviceVersion(), false);
+		ParcelWritter_bhf.b(parcel, 7, castdevice.getServicePort());
+		ParcelWritter_bhf.b(parcel, 8, castdevice.getIcons(), false);
 		ParcelWritter_bhf.b(parcel, i);
 	}
 

@@ -3,6 +3,7 @@ package com.fireflycast.cast;
 import android.os.Bundle;
 import android.os.Parcel;
 
+import com.fireflycast.cast.images.WebImage;
 import com.fireflycast.server.cast.mdns.CastDeviceHelper_atr;
 import com.fireflycast.server.common.checker.ObjEqualChecker_avo;
 import com.fireflycast.server.common.internal.safeparcel.SafeParcelable;
@@ -83,7 +84,7 @@ public class CastDevice implements SafeParcelable {
 		return list;
 	}
 
-	public static CastDevice getFromBundle_b(Bundle bundle) {
+	public static CastDevice getFromBundle(Bundle bundle) {
 		if (bundle == null) {
 			return null;
 		} else {
@@ -112,7 +113,7 @@ public class CastDevice implements SafeParcelable {
 		return mVersionCode_b;
 	}
 
-	public final void putInBundle_a(Bundle bundle) {
+	public final void putInBundle(Bundle bundle) {
 		if (bundle == null) {
 			return;
 		} else {
@@ -121,15 +122,19 @@ public class CastDevice implements SafeParcelable {
 		}
 	}
 
-	public final String getDeviceId_b() {
+	public final String getDeviceId() {
 		return mDeviceId_c;
 	}
 
-	public final Inet4Address getHostIp_c() {
+	public final Inet4Address getIpAddress() {
 		return mHost_d;
 	}
+	
+	public final boolean hasIcons() {
+        return (!(mIconList_i.isEmpty()));
+    }
 
-	public final String getFriendlyName_d() {
+	public final String getFriendlyName() {
 		return mFriendlyName_e;
 	}
 
@@ -137,8 +142,17 @@ public class CastDevice implements SafeParcelable {
 		return 0;
 	}
 
-	public final String getModleName_e() {
+	public final String getModelName() {
 		return mModleName_f;
+	}
+	
+	public final boolean isSameDevice(CastDevice castDevice) {
+	    if (castDevice == null)
+	        return false;
+	      if (getDeviceId() == null)
+	        return (castDevice.getDeviceId() == null);
+	      return ObjEqualChecker_avo.isEquals_a(getDeviceId(), castDevice.getDeviceId());
+
 	}
 
 	public boolean equals(Object obj) {
@@ -176,15 +190,43 @@ public class CastDevice implements SafeParcelable {
 		return false;
 	}
 
-	public final String getDeviceVersion_f() {
+	public final String getDeviceVersion() {
 		return mDeviceVersion_g;
 	}
 
-	public final int getServicePort_g() {
+	public final int getServicePort() {
 		return mServicePort_h;
 	}
 
-	public final List getIconList_h() {
+	public final WebImage getIcon(int preferredWidth, int preferredHeight) {
+        if (mIconList_i != null && !mIconList_i.isEmpty()) {
+            if ((preferredWidth <= 0) || (preferredHeight <= 0))
+                return ((WebImage)this.mIconList_i.get(0));
+            WebImage image1 = null;
+            WebImage image2 = null;
+            for (int i = 0; i < mIconList_i.size(); i++) {
+                WebImage image = (WebImage) mIconList_i.get(i);
+                int width = image.getWidth();
+                int height = image.getHeight();
+                if ((width >= preferredWidth) && (height >= height)) {
+                    if ((image1 == null) || ((image1.getWidth() > width) && (image1.getHeight() > height)))
+                        image1 = image;
+                } else if ((width < preferredWidth) && (height < preferredHeight) && (((image2 == null) || ((image2.getWidth() < width) && (image2.getHeight() < height))))) {
+                    image2 = image;
+                }
+            }
+            if (image1 != null) {
+                return image1;
+            } else if (image2 != null) {
+                return image2;
+            } else {
+              return (WebImage)mIconList_i.get(0);
+            }
+        }
+	    return null;
+    }
+	
+	public final List<WebImage> getIcons() {
 		return Collections.unmodifiableList(mIconList_i);
 	}
 
@@ -202,7 +244,7 @@ public class CastDevice implements SafeParcelable {
 		return String.format("\"%s\" (%s)", aobj);
 	}
 
-	public void writeToParcel(Parcel parcel, int j) {
+	public void writeToParcel(Parcel parcel, int flags) {
 		CastDeviceCreator_ats.buildParcel_a(this, parcel);
 	}
 }

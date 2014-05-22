@@ -419,11 +419,11 @@ public class RemoteMediaPlayer implements Cast.MessageReceivedCallback {
 	}
 
 	public interface OnMetadataUpdatedListener {
-		public void onMetadataUpdated();
+		public abstract void onMetadataUpdated();
 	}
 
 	public interface OnStatusUpdatedListener {
-		public void onStatusUpdated();
+		public abstract void onStatusUpdated();
 	}
 
 }

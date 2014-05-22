@@ -82,21 +82,21 @@ abstract class DeviceFilter_awz {
             try
             {
                 Object aobj[] = new Object[3];
-                aobj[0] = axb1.mCastDevice_b.getHostIp_c().toString();
-                aobj[1] = Integer.valueOf(axb1.mCastDevice_b.getServicePort_g());
-                aobj[2] = axb1.mCastDevice_b.getFriendlyName_d();
+                aobj[0] = axb1.mCastDevice_b.getIpAddress().toString();
+                aobj[1] = Integer.valueOf(axb1.mCastDevice_b.getServicePort());
+                aobj[2] = axb1.mCastDevice_b.getFriendlyName();
                 mLogs_a.d("connecting to: %s:%d (%s)", aobj);
-                axb1.mCastSocket_a.connect_a(axb1.mCastDevice_b.getHostIp_c(),
-                        axb1.mCastDevice_b.getServicePort_g());
+                axb1.mCastSocket_a.connect_a(axb1.mCastDevice_b.getIpAddress(),
+                        axb1.mCastDevice_b.getServicePort());
             } catch (Exception ioexception)
             {
                 mLogs_a.e(ioexception, "Exception while connecting socket", new Object[0]);
             }
         } else {
             Object aobj[] = new Object[3];
-            aobj[0] = axb1.mCastDevice_b.getHostIp_c().toString();
-            aobj[1] = Integer.valueOf(axb1.mCastDevice_b.getServicePort_g());
-            aobj[2] = axb1.mCastDevice_b.getFriendlyName_d();
+            aobj[0] = axb1.mCastDevice_b.getIpAddress().toString();
+            aobj[1] = Integer.valueOf(axb1.mCastDevice_b.getServicePort());
+            aobj[2] = axb1.mCastDevice_b.getFriendlyName();
             mLogs_a.d("accept device to: %s:%d (%s)", aobj);
             axb1.acceptDevice_a(axb1.mCastDevice_b, axb1.mDeviceFilter_f.mDiscoveryCriterias_g);
         }

@@ -94,7 +94,7 @@ public class MirroringControlChannel_aum extends CastChannel_avn {
             if (s1.equals("ANSWER"))
             {
                 mLogs_j.d("onAnswer", new Object[0]);
-                onAnswer_b((new StringBuilder()).append(a.getHostIp_c().getHostAddress())
+                onAnswer_b((new StringBuilder()).append(a.getIpAddress().getHostAddress())
                         .append(":").append(b()).toString());
                 return;
             }

@@ -1,4 +1,3 @@
-
 package com.fireflycast.cast;
 
 import java.util.ArrayList;
