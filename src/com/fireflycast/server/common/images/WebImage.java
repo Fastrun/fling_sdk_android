@@ -67,22 +67,22 @@ public final class WebImage implements SafeParcelable {
         return uri;
     }
 
-    public final int a()
+    public final int getVersionCode()
     {
         return a;
     }
 
-    public final Uri getUrl_b()
+    public final Uri getUrl()
     {
         return url;
     }
 
-    public final int c()
+    public final int getWidth()
     {
         return width;
     }
 
-    public final int d()
+    public final int getHeight()
     {
         return height;
     }
@@ -92,7 +92,7 @@ public final class WebImage implements SafeParcelable {
         return 0;
     }
 
-    public final JSONObject e()
+    public final JSONObject cT()
     {
         JSONObject jsonobject = new JSONObject();
         try

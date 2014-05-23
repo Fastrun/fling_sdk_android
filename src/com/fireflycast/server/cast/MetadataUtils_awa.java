@@ -128,7 +128,7 @@ public final class MetadataUtils_awa {
         }
         jsonarray = new JSONArray();
         for (Iterator iterator = images.iterator(); iterator.hasNext(); jsonarray
-                .put(((WebImage) iterator.next()).e()))
+                .put(((WebImage) iterator.next()).cT()))
             ;
         try {
             jsonobject.put("images", jsonarray);

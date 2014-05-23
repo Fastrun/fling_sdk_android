@@ -50,7 +50,7 @@ final class CastMediaManagerHelper_axk {
             bundle.putInt("android.media.metadata.YEAR", calendar.get(1));
         if (aub1.hasWebImage_c())
             bundle.putString("android.media.metadata.ARTWORK_URI", ((WebImage) aub1.getImages_b()
-                    .get(0)).getUrl_b()
+                    .get(0)).getUrl()
                     .toString());
         return bundle;
     }

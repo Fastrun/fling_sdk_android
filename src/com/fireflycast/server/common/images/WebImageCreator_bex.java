@@ -16,10 +16,10 @@ public final class WebImageCreator_bex implements android.os.Parcelable.Creator 
     public static void a(WebImage webimage, Parcel parcel, int i)
     {
         int j = ParcelWritter_bhf.a(parcel, 20293);
-        ParcelWritter_bhf.b(parcel, 1, webimage.a());
-        ParcelWritter_bhf.a(parcel, 2, webimage.getUrl_b(), i, false);
-        ParcelWritter_bhf.b(parcel, 3, webimage.c());
-        ParcelWritter_bhf.b(parcel, 4, webimage.d());
+        ParcelWritter_bhf.b(parcel, 1, webimage.getVersionCode());
+        ParcelWritter_bhf.a(parcel, 2, webimage.getUrl(), i, false);
+        ParcelWritter_bhf.b(parcel, 3, webimage.getWidth());
+        ParcelWritter_bhf.b(parcel, 4, webimage.getHeight());
         ParcelWritter_bhf.b(parcel, j);
     }
 
