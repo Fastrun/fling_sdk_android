@@ -8,9 +8,15 @@
         android:minSdkVersion="9"
         android:targetSdkVersion="19" />
 
-    <application />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="true" >
+    </uses-feature>
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application />
 
 </manifest>
