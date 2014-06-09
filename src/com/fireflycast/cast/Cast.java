@@ -118,7 +118,7 @@ public class Cast {
 		public static final class CastApiImpl_a implements CastApi {
 		    public String makeApplicationId(String appUrl) {
                 try {
-                    String  encode = URLEncoder.encode(appUrl, "UTF-8");
+                    String encode = URLEncoder.encode(appUrl, "UTF-8");
                     StringBuffer sb = new StringBuffer();
                     sb.append("app:?uri=");
                     sb.append(encode);
