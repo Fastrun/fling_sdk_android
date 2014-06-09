@@ -1,6 +1,7 @@
 package com.fireflycast.cast;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import android.content.Context;
@@ -116,21 +117,31 @@ public class Cast {
 		 */
 		public static final class CastApiImpl_a implements CastApi {
 		    public String makeApplicationId(String appUrl) {
-		        String encode = URLEncoder.encode(appUrl);
-		        StringBuffer sb = new StringBuffer();
-		        sb.append("app:?uri=");
-		        sb.append(encode);
-                return sb.toString();
+                try {
+                    String  encode = URLEncoder.encode(appUrl, "UTF-8");
+                    StringBuffer sb = new StringBuffer();
+                    sb.append("app:?uri=");
+                    sb.append(encode);
+                    return sb.toString();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+		        return appUrl;
             }
 
 		    public String makeApplicationId(String id, String msUrl) {
-		        String encode = URLEncoder.encode(msUrl);
-                StringBuffer sb = new StringBuffer();
-                sb.append("app:?id=");
-                sb.append(id);
-                sb.append("&ms=");
-                sb.append(encode);
-                return sb.toString();
+                try {
+                    String encode = URLEncoder.encode(msUrl, "UTF-8");
+                    StringBuffer sb = new StringBuffer();
+                    sb.append("app:?id=");
+                    sb.append(id);
+                    sb.append("&ms=");
+                    sb.append(encode);
+                    return sb.toString();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                return id;
 		    }
 		    
 			public void requestStatus(FireflyApiClient client)
