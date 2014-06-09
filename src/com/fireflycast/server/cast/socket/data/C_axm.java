@@ -20,7 +20,7 @@ public final class C_axm extends C_igu {
     private boolean k;
     private String payloadUtf8;
     private boolean m;
-    private BinaryPayload_igp payloadBinary;
+    private BinaryPayload payloadBinary;
     private int mTotalLen_o;
 
     public C_axm()
@@ -31,7 +31,7 @@ public final class C_axm extends C_igu {
         namespace_p = "";
         payloadType = 0;
         payloadUtf8 = "";
-        payloadBinary = BinaryPayload_igp.mInstance_a;
+        payloadBinary = BinaryPayload.mInstance_a;
         mTotalLen_o = -1;
     }
 
@@ -58,7 +58,7 @@ public final class C_axm extends C_igu {
         return this;
     }
 
-    public final C_axm a(BinaryPayload_igp igp1)
+    public final C_axm a(BinaryPayload igp1)
     {
         m = true;
         payloadBinary = igp1;
@@ -208,7 +208,7 @@ public final class C_axm extends C_igu {
         return payloadUtf8;
     }
 
-    public final BinaryPayload_igp getBinaryMessage_f()
+    public final BinaryPayload getBinaryMessage_f()
     {
         return payloadBinary;
     }

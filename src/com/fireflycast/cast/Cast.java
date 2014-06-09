@@ -12,10 +12,10 @@ import android.text.TextUtils;
 import com.fireflycast.cast.FireflyApiClient.ApiOptions;
 import com.fireflycast.cast.FireflyApiClient.ConnectionCallbacks;
 import com.fireflycast.cast.FireflyApiClient.OnConnectionFailedListener;
-import com.fireflycast.cast.FireflyApi_a.FireflyApiImpl_a;
-import com.fireflycast.client.internal.AccountInfo_ee;
-import com.fireflycast.client.internal.CastClientImpl_dq;
-import com.fireflycast.client.internal.ValueChecker_er;
+import com.fireflycast.cast.FireflyApi.FireflyApiImpl_a;
+import com.fireflycast.client.internal.AccountInfo;
+import com.fireflycast.client.internal.CastClientImpl;
+import com.fireflycast.client.internal.ValueChecker;
 
 public class Cast {
 	public static final int MAX_MESSAGE_LENGTH = 65536;
@@ -25,22 +25,22 @@ public class Cast {
 	/*
 	 * Cast$1.smali : OK
 	 */
-	static final Api.ConnectionBuilder_b<CastClientImpl_dq> mConnectionBuilder_va = new Api.ConnectionBuilder_b<CastClientImpl_dq>() {
+	static final Api.ConnectionBuilder_b<CastClientImpl> mConnectionBuilder_va = new Api.ConnectionBuilder_b<CastClientImpl>() {
 		public int getPriority() {
 			return -1;
 		}
 
-		public CastClientImpl_dq build_b(Context context, Looper looper,
-				AccountInfo_ee account, ApiOptions options,
+		public CastClientImpl build_b(Context context, Looper looper,
+				AccountInfo account, ApiOptions options,
 				ConnectionCallbacks callbacks,
 				OnConnectionFailedListener failedListener) {
-			ValueChecker_er.checkNullPointer_b(options,
+			ValueChecker.checkNullPointer_b(options,
 					"Setting the API options is required.");
-			ValueChecker_er.checkTrueWithErrorMsg(options instanceof CastOptions,
+			ValueChecker.checkTrueWithErrorMsg(options instanceof CastOptions,
 					"Must provide valid CastOptions!");
 
 			CastOptions castOptions = (CastOptions) options;
-			return new CastClientImpl_dq(context, looper,
+			return new CastClientImpl(context, looper,
 					castOptions.castDevice_wv, castOptions.loggingFlag_wx,
 					castOptions.castListener_ww, callbacks, failedListener);
 		}
@@ -157,7 +157,7 @@ public class Cast {
 			public PendingResult<Status> sendMessage(FireflyApiClient client,
 					final String namespace, final String message) {
 				return client.executeTask_b(new StatusResultHandler_b() {
-					protected void execute_a(CastClientImpl_dq dq)
+					protected void execute_a(CastClientImpl dq)
 							throws RemoteException {
 						try {
 							dq.sendMessage_a(namespace, message, this);
@@ -173,7 +173,7 @@ public class Cast {
 			public PendingResult<ApplicationConnectionResult> launchApplication(
 					FireflyApiClient client, final String applicationId) {
 				return client.executeTask_b(new ApplicationConnectionResultHandler_c() {
-					protected void execute_a(CastClientImpl_dq dq)
+					protected void execute_a(CastClientImpl dq)
 							throws RemoteException {
 						try {
 							dq.launchApplication_a(applicationId, false, this);
@@ -188,7 +188,7 @@ public class Cast {
 					FireflyApiClient client, final String applicationId,
 					final boolean relaunchIfRunning) {
 				return client.executeTask_b(new ApplicationConnectionResultHandler_c() {
-					protected void execute_a(CastClientImpl_dq dq)
+					protected void execute_a(CastClientImpl dq)
 							throws RemoteException {
 						try {
 							dq.launchApplication_a(applicationId,
@@ -204,7 +204,7 @@ public class Cast {
 					FireflyApiClient client, final String applicationId,
 					final String sessionId) {
 				return client.executeTask_b(new ApplicationConnectionResultHandler_c() {
-					protected void execute_a(CastClientImpl_dq dq)
+					protected void execute_a(CastClientImpl dq)
 							throws RemoteException {
 						try {
 							dq.joinApplication_b(applicationId, sessionId, this);
@@ -218,7 +218,7 @@ public class Cast {
 			public PendingResult<ApplicationConnectionResult> joinApplication(
 					FireflyApiClient client, final String applicationId) {
 				return client.executeTask_b(new ApplicationConnectionResultHandler_c() {
-					protected void execute_a(CastClientImpl_dq dq)
+					protected void execute_a(CastClientImpl dq)
 							throws RemoteException {
 						try {
 							dq.joinApplication_b(applicationId, null, this);
@@ -232,7 +232,7 @@ public class Cast {
 			public PendingResult<ApplicationConnectionResult> joinApplication(
 					FireflyApiClient client) {
 				return client.executeTask_b(new ApplicationConnectionResultHandler_c() {
-					protected void execute_a(CastClientImpl_dq dq)
+					protected void execute_a(CastClientImpl dq)
 							throws RemoteException {
 						try {
 							dq.joinApplication_b(null, null, this);
@@ -246,7 +246,7 @@ public class Cast {
 			public PendingResult<Status> leaveApplication(
 					FireflyApiClient client) {
 				return client.executeTask_b(new StatusResultHandler_b() {
-					protected void execute_a(CastClientImpl_dq dq)
+					protected void execute_a(CastClientImpl dq)
 							throws RemoteException {
 						try {
 							dq.leaveApplication_e(this);
@@ -259,7 +259,7 @@ public class Cast {
 
 			public PendingResult<Status> stopApplication(FireflyApiClient client) {
 				return client.executeTask_b(new StatusResultHandler_b() {
-					protected void execute_a(CastClientImpl_dq dq)
+					protected void execute_a(CastClientImpl dq)
 							throws RemoteException {
 						try {
 							dq.stopApplication_a("", this);
@@ -273,7 +273,7 @@ public class Cast {
 			public PendingResult<Status> stopApplication(
 					FireflyApiClient client, final String sessionId) {
 				return client.executeTask_b(new StatusResultHandler_b() {
-					protected void execute_a(CastClientImpl_dq dq)
+					protected void execute_a(CastClientImpl dq)
 							throws RemoteException {
 						if (TextUtils.isEmpty(sessionId)) {
 							notifyResult_c(CastStatusCodes.INVALID_REQUEST,
@@ -402,7 +402,7 @@ public class Cast {
 	}
 
 	public static abstract class PendingResultHandler_a<R extends Result>
-			extends FireflyApiImpl_a<R, CastClientImpl_dq> implements
+			extends FireflyApiImpl_a<R, CastClientImpl> implements
 			PendingResult<R> {
 		public PendingResultHandler_a() {
 			super(Cast.mConnectionBuilder_va);
@@ -444,9 +444,9 @@ public class Cast {
 			private int mLoggingFlag_wA;
 
 			private Builder(CastDevice castDevice, Listener castListener) {
-				ValueChecker_er.checkNullPointer_b(castDevice,
+				ValueChecker.checkNullPointer_b(castDevice,
 						"CastDevice parameter cannot be null");
-				ValueChecker_er.checkNullPointer_b(castListener,
+				ValueChecker.checkNullPointer_b(castListener,
 						"CastListener parameter cannot be null");
 				this.mCastDevice_wy = castDevice;
 				this.mListener_wz = castListener;

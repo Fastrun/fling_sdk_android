@@ -12,11 +12,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 
-import com.fireflycast.cast.FireflyApi_a.FireflyApiImpl_a;
+import com.fireflycast.cast.FireflyApi.FireflyApiImpl_a;
 import com.fireflycast.client.common.FireflyPlayServicesClient;
-import com.fireflycast.client.common.api.FireflyApiClientImpl_b;
-import com.fireflycast.client.internal.AccountInfo_ee;
-import com.fireflycast.client.internal.ValueChecker_er;
+import com.fireflycast.client.common.api.FireflyApiClientImpl;
+import com.fireflycast.client.internal.AccountInfo;
+import com.fireflycast.client.internal.ValueChecker;
 
 /*
  * GoogleApiClient.smali : OK
@@ -94,16 +94,16 @@ public interface FireflyApiClient {
 				FireflyApiClient.OnConnectionFailedListener connectionFailedListener) {
 			this(context);
 
-			ValueChecker_er.checkNullPointer_b(connectedListener,
+			ValueChecker.checkNullPointer_b(connectedListener,
 					"Must provide a connected listener");
 			mCallbacksSet_zt.add(connectedListener);
-			ValueChecker_er.checkNullPointer_b(connectionFailedListener,
+			ValueChecker.checkNullPointer_b(connectionFailedListener,
 					"Must provide a connection failed listener");
 			mFailedListenerSet_zu.add(connectionFailedListener);
 		}
 
 		public Builder setHandler(Handler handler) {
-			ValueChecker_er.checkNullPointer_b(handler,
+			ValueChecker.checkNullPointer_b(handler,
 					"Handler must not be null");
 			mLooper_zs = handler.getLooper();
 			return this;
@@ -149,13 +149,13 @@ public interface FireflyApiClient {
 			return this;
 		}
 
-		public AccountInfo_ee getAccount_dx() {
-			return new AccountInfo_ee(mAccountName_vi, mScopeUriSet_zn,
+		public AccountInfo getAccount_dx() {
+			return new AccountInfo(mAccountName_vi, mScopeUriSet_zn,
 					mGravityForPopups_zo, mView_zp, mPackageName_zq);
 		}
 
 		public FireflyApiClient build() {
-			return new FireflyApiClientImpl_b(mContext, mLooper_zs,
+			return new FireflyApiClientImpl(mContext, mLooper_zs,
 					getAccount_dx(), mApiOptionMap_zr, mCallbacksSet_zt,
 					mFailedListenerSet_zu);
 		}

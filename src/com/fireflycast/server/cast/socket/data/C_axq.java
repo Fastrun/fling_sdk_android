@@ -5,19 +5,19 @@ import java.io.IOException;
 
 public final class C_axq extends C_igu {
     private boolean a;
-    private BinaryPayload_igp b;
+    private BinaryPayload b;
     private boolean c;
-    private BinaryPayload_igp d;
+    private BinaryPayload d;
     private int e;
 
     public C_axq()
     {
-        b = BinaryPayload_igp.mInstance_a;
-        d = BinaryPayload_igp.mInstance_a;
+        b = BinaryPayload.mInstance_a;
+        d = BinaryPayload.mInstance_a;
         e = -1;
     }
 
-    public final BinaryPayload_igp a()
+    public final BinaryPayload a()
     {
         return b;
     }
@@ -38,13 +38,13 @@ public final class C_axq extends C_igu {
                     return this;
 
                 case 10: // '\n'
-                    BinaryPayload_igp igp2 = igq1.f();
+                    BinaryPayload igp2 = igq1.f();
                     a = true;
                     b = igp2;
                     break;
 
                 case 18: // '\022'
-                    BinaryPayload_igp igp1 = igq1.f();
+                    BinaryPayload igp1 = igq1.f();
                     c = true;
                     d = igp1;
                     break;
@@ -79,7 +79,7 @@ public final class C_axq extends C_igu {
         return i;
     }
 
-    public final BinaryPayload_igp d()
+    public final BinaryPayload d()
     {
         return d;
     }

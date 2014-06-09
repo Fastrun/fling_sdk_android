@@ -5,7 +5,7 @@ import android.app.PendingIntent;
 import android.content.IntentSender;
 
 import com.fireflycast.cast.ConnectionResult;
-import com.fireflycast.client.internal.StringBuilder_ep;
+import com.fireflycast.client.internal.MyStringBuilder;
 
 /*
  * ConnectionResult.smali : OK
@@ -107,7 +107,7 @@ public final class ConnectionResult {
 	}
 
 	public String toString() {
-		return StringBuilder_ep.newStringBuilder_e(this).append_a("statusCode", getStatusMessage_dn())
+		return MyStringBuilder.newStringBuilder_e(this).append_a("statusCode", getStatusMessage_dn())
 				.append_a("resolution", this.mPendingIntent).toString();
 	}
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Looper;
 
 import com.fireflycast.cast.FireflyApiClient.ApiOptions;
-import com.fireflycast.client.internal.AccountInfo_ee;
+import com.fireflycast.client.internal.AccountInfo;
 
 /*
  * Api.smali : OK
@@ -34,7 +34,7 @@ public final class Api {
 	/* Api$b.smali: OK */
 	public interface ConnectionBuilder_b<T extends ConnectionApi_a> {
 		public T build_b(Context context, Looper looper,
-				AccountInfo_ee account, ApiOptions options,
+				AccountInfo account, ApiOptions options,
 				FireflyApiClient.ConnectionCallbacks callbacks,
 				FireflyApiClient.OnConnectionFailedListener failedListener);
 

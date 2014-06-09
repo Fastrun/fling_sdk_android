@@ -4,7 +4,7 @@ package com.fireflycast.server.common.images;
 import android.net.Uri;
 import android.os.Parcel;
 
-import com.fireflycast.server.common.checker.ObjEqualChecker_avo;
+import com.fireflycast.server.common.checker.ObjEqualChecker;
 import com.fireflycast.server.common.internal.safeparcel.SafeParcelable;
 
 import org.json.JSONException;
@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import java.util.Arrays;
 
 public final class WebImage implements SafeParcelable {
-    public static final android.os.Parcelable.Creator CREATOR = new WebImageCreator_bex();
+    public static final android.os.Parcelable.Creator CREATOR = new WebImageCreator();
     private final int a;
     private final Uri url;
     private final int width;
@@ -114,7 +114,7 @@ public final class WebImage implements SafeParcelable {
             if (obj == null || !(obj instanceof WebImage))
                 return false;
             WebImage webimage = (WebImage) obj;
-            if (!ObjEqualChecker_avo.isEquals_a(url, webimage.url) || width != webimage.width
+            if (!ObjEqualChecker.isEquals_a(url, webimage.url) || width != webimage.width
                     || height != webimage.height)
                 return false;
         }
@@ -141,6 +141,6 @@ public final class WebImage implements SafeParcelable {
 
     public final void writeToParcel(Parcel parcel, int i)
     {
-        WebImageCreator_bex.a(this, parcel, i);
+        WebImageCreator.a(this, parcel, i);
     }
 }

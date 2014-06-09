@@ -4,10 +4,10 @@ import java.io.IOException;
 
 import org.json.JSONObject;
 
-import com.fireflycast.client.internal.CastClientImpl_dq;
-import com.fireflycast.client.internal.MediaControlChannelImpl_dv;
-import com.fireflycast.client.internal.MessageSender_dw;
-import com.fireflycast.client.internal.RequestTrackerCallback_dx;
+import com.fireflycast.client.internal.CastClientImpl;
+import com.fireflycast.client.internal.MediaControlChannelImpl;
+import com.fireflycast.client.internal.MessageSender;
+import com.fireflycast.client.internal.RequestTrackerCallback;
 
 public class RemoteMediaPlayer implements Cast.MessageReceivedCallback {
 	public static final int RESUME_STATE_UNCHANGED = 0;
@@ -21,7 +21,7 @@ public class RemoteMediaPlayer implements Cast.MessageReceivedCallback {
 
 	private final Object mLock_mg = new Object();
 
-	private final MediaControlChannelImpl_dv mMediaControlChannel_xg = new MediaControlChannelImpl_dv() {
+	private final MediaControlChannelImpl mMediaControlChannel_xg = new MediaControlChannelImpl() {
 		protected void onStatusUpdated() {
 			RemoteMediaPlayer.this.onStatusUpdated();
 		}
@@ -59,7 +59,7 @@ public class RemoteMediaPlayer implements Cast.MessageReceivedCallback {
 			final boolean autoplay, final long playPosition,
 			final JSONObject customData) {
 		return apiClient.executeTask_b(new MediaChannelResultHandler_b() {
-			protected void execute_a(CastClientImpl_dq dq) {
+			protected void execute_a(CastClientImpl dq) {
 				synchronized (mLock_mg) {
 					mMessageSender_xh.setApiClient_b(apiClient);
 					try {
@@ -84,7 +84,7 @@ public class RemoteMediaPlayer implements Cast.MessageReceivedCallback {
 	public PendingResult<MediaChannelResult> pause(
 			final FireflyApiClient apiClient, final JSONObject customData) {
 		return apiClient.executeTask_b(new MediaChannelResultHandler_b() {
-			protected void execute_a(CastClientImpl_dq dq) {
+			protected void execute_a(CastClientImpl dq) {
 				synchronized (mLock_mg) {
 					mMessageSender_xh.setApiClient_b(apiClient);
 					try {
@@ -108,7 +108,7 @@ public class RemoteMediaPlayer implements Cast.MessageReceivedCallback {
 	public PendingResult<MediaChannelResult> stop(
 			final FireflyApiClient apiClient, final JSONObject customData) {
 		return apiClient.executeTask_b(new MediaChannelResultHandler_b() {
-			protected void execute_a(CastClientImpl_dq dq) {
+			protected void execute_a(CastClientImpl dq) {
 				synchronized (mLock_mg) {
 					mMessageSender_xh.setApiClient_b(apiClient);
 					try {
@@ -132,7 +132,7 @@ public class RemoteMediaPlayer implements Cast.MessageReceivedCallback {
 	public PendingResult<MediaChannelResult> play(
 			final FireflyApiClient apiClient, final JSONObject customData) {
 		return apiClient.executeTask_b(new MediaChannelResultHandler_b() {
-			protected void execute_a(CastClientImpl_dq dq) {
+			protected void execute_a(CastClientImpl dq) {
 				synchronized (mLock_mg) {
 					mMessageSender_xh.setApiClient_b(apiClient);
 					try {
@@ -163,7 +163,7 @@ public class RemoteMediaPlayer implements Cast.MessageReceivedCallback {
 			final FireflyApiClient apiClient, final long position,
 			final int resumeState, final JSONObject customData) {
 		return apiClient.executeTask_b(new MediaChannelResultHandler_b() {
-			protected void execute_a(CastClientImpl_dq dq) {
+			protected void execute_a(CastClientImpl dq) {
 				synchronized (mLock_mg) {
 					mMessageSender_xh.setApiClient_b(apiClient);
 					try {
@@ -194,7 +194,7 @@ public class RemoteMediaPlayer implements Cast.MessageReceivedCallback {
 			throw new IllegalArgumentException("Volume cannot be " + volume);
 		}
 		return apiClient.executeTask_b(new MediaChannelResultHandler_b() {
-			protected void execute_a(CastClientImpl_dq dq) {
+			protected void execute_a(CastClientImpl dq) {
 				synchronized (mLock_mg) {
 					mMessageSender_xh.setApiClient_b(apiClient);
 					try {
@@ -227,7 +227,7 @@ public class RemoteMediaPlayer implements Cast.MessageReceivedCallback {
 			final FireflyApiClient apiClient, final boolean muteState,
 			final JSONObject customData) {
 		return apiClient.executeTask_b(new MediaChannelResultHandler_b() {
-			protected void execute_a(CastClientImpl_dq dq) {
+			protected void execute_a(CastClientImpl dq) {
 				synchronized (mLock_mg) {
 					mMessageSender_xh.setApiClient_b(apiClient);
 					try {
@@ -251,7 +251,7 @@ public class RemoteMediaPlayer implements Cast.MessageReceivedCallback {
 	public PendingResult<MediaChannelResult> requestStatus(
 			final FireflyApiClient apiClient) {
 		return apiClient.executeTask_b(new MediaChannelResultHandler_b() {
-			protected void execute_a(CastClientImpl_dq paramdq) {
+			protected void execute_a(CastClientImpl paramdq) {
 				synchronized (mLock_mg) {
 					mMessageSender_xh.setApiClient_b(apiClient);
 					try {
@@ -325,7 +325,7 @@ public class RemoteMediaPlayer implements Cast.MessageReceivedCallback {
 
 	private static abstract class MediaChannelResultHandler_b extends
 			Cast.PendingResultHandler_a<MediaChannelResult> {
-		RequestTrackerCallback_dx requestTrackerCallback_xy = new RequestTrackerCallback_dx() {
+		RequestTrackerCallback requestTrackerCallback_xy = new RequestTrackerCallback() {
 			public void onSignInRequired_k(long paramLong) {
 				postResult_a(createMediaChannelResult_j(new Status(4))); // 4 :
 																			// CommonStatusCode.SIGN_IN_REQUIRED
@@ -371,7 +371,7 @@ public class RemoteMediaPlayer implements Cast.MessageReceivedCallback {
 		}
 	}
 
-	private class MessageSenderImpl_a implements MessageSender_dw {
+	private class MessageSenderImpl_a implements MessageSender {
 		private FireflyApiClient client;
 		private long requestId_xv = 0L;
 

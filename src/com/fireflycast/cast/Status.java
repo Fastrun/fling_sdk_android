@@ -7,7 +7,7 @@ import android.os.Parcel;
 
 import com.fireflycast.client.common.api.CommonStatusCodes;
 import com.fireflycast.client.common.internal.safeparcel.SafeParcelable;
-import com.fireflycast.client.internal.StringBuilder_ep;
+import com.fireflycast.client.internal.MyStringBuilder;
 
 /*
  * Status.smali : OK
@@ -81,7 +81,7 @@ public class Status implements Result, SafeParcelable {
 	}
 
 	public int hashCode() {
-		return StringBuilder_ep.hashCode(new Object[] {
+		return MyStringBuilder.hashCode(new Object[] {
 				Integer.valueOf(this.mVersionCode_wj),
 				Integer.valueOf(this.mStatusCode_yJ), this.mStatusMessage_zT,
 				this.mPendingIntent });
@@ -93,8 +93,8 @@ public class Status implements Result, SafeParcelable {
 		Status localStatus = (Status) obj;
 		return ((this.mVersionCode_wj == localStatus.mVersionCode_wj)
 				&& (this.mStatusCode_yJ == localStatus.mStatusCode_yJ)
-				&& (StringBuilder_ep.compare(this.mStatusMessage_zT,
-						localStatus.mStatusMessage_zT)) && (StringBuilder_ep
+				&& (MyStringBuilder.compare(this.mStatusMessage_zT,
+						localStatus.mStatusMessage_zT)) && (MyStringBuilder
 					.compare(this.mPendingIntent, localStatus.mPendingIntent)));
 	}
 
@@ -106,7 +106,7 @@ public class Status implements Result, SafeParcelable {
 	}
 
 	public String toString() {
-		return StringBuilder_ep.newStringBuilder_e(this)
+		return MyStringBuilder.newStringBuilder_e(this)
 				.append_a("statusCode", getStatusMessage_dn())
 				.append_a("resolution", this.mPendingIntent).toString();
 	}

@@ -14,7 +14,7 @@ import com.fireflycast.client.common.internal.safeparcel.SafeParcelable;
  * ApplicationMetadata.smali : OK
  */
 public final class ApplicationMetadata implements SafeParcelable {
-    public static final Parcelable.Creator<ApplicationMetadata> CREATOR = new ApplicationMetadataCreator_a();
+    public static final Parcelable.Creator<ApplicationMetadata> CREATOR = new ApplicationMetadataCreator();
     private final int mVersionCode_wj;
     String mApplicationId_wk;
     String mName;
@@ -82,6 +82,6 @@ public final class ApplicationMetadata implements SafeParcelable {
     }
 
     public void writeToParcel(Parcel out, int flags) {
-        ApplicationMetadataCreator_a.buildParcel_a(this, out, flags);
+        ApplicationMetadataCreator.buildParcel_a(this, out, flags);
     }
 }

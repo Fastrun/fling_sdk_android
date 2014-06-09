@@ -5,8 +5,8 @@ import android.app.PendingIntent;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.fireflycast.client.common.internal.safeparcel.ParcelUtil_a;
-import com.fireflycast.client.common.internal.safeparcel.ParcelUtil_b;
+import com.fireflycast.client.common.internal.safeparcel.ParcelReadUtil;
+import com.fireflycast.client.common.internal.safeparcel.ParcelWriteUtil;
 
 /*
  * StatusCreator.smali : OK
@@ -16,33 +16,33 @@ public class StatusCreator implements Parcelable.Creator<Status> {
     public static final int CONTENT_DESCRIPTION = 0;
 
     public Status createFromParcel(Parcel parcel) {
-        int i = ParcelUtil_a.o(parcel);
+        int i = ParcelReadUtil.o(parcel);
         int j = 0;
         int k = 0;
         String str = null;
         PendingIntent localPendingIntent = null;
         while (parcel.dataPosition() < i) {
-            int l = ParcelUtil_a.readInt_n(parcel);
-            switch (ParcelUtil_a.S(l)) {
+            int l = ParcelReadUtil.readInt_n(parcel);
+            switch (ParcelReadUtil.S(l)) {
                 case 1:
-                    k = ParcelUtil_a.g(parcel, l);
+                    k = ParcelReadUtil.g(parcel, l);
                     break;
                 case 1000:
-                    j = ParcelUtil_a.g(parcel, l);
+                    j = ParcelReadUtil.g(parcel, l);
                     break;
                 case 2:
-                    str = ParcelUtil_a.m(parcel, l);
+                    str = ParcelReadUtil.m(parcel, l);
                     break;
                 case 3:
-                    localPendingIntent = (PendingIntent) ParcelUtil_a.a(parcel, l,
+                    localPendingIntent = (PendingIntent) ParcelReadUtil.a(parcel, l,
                             PendingIntent.CREATOR);
                     break;
                 default:
-                    ParcelUtil_a.b(parcel, l);
+                    ParcelReadUtil.b(parcel, l);
             }
         }
         if (parcel.dataPosition() != i)
-            throw new ParcelUtil_a.SafeParcelA("Overread allowed size end=" + i, parcel);
+            throw new ParcelReadUtil.SafeParcelA("Overread allowed size end=" + i, parcel);
         return new Status(j, k, str, localPendingIntent);
     }
 
@@ -51,11 +51,11 @@ public class StatusCreator implements Parcelable.Creator<Status> {
     }
 
     static void buildParcel_a(Status paramStatus, Parcel paramParcel, int paramInt) {
-        int i = ParcelUtil_b.p(paramParcel);
-        ParcelUtil_b.c(paramParcel, 1, paramStatus.getStatusCode());
-        ParcelUtil_b.c(paramParcel, 1000, paramStatus.getVersionCode());
-        ParcelUtil_b.a(paramParcel, 2, paramStatus.getStatusMessage_dF(), false);
-        ParcelUtil_b.a(paramParcel, 3, paramStatus.getPendingIntent_dE(), paramInt, false);
-        ParcelUtil_b.D(paramParcel, i);
+        int i = ParcelWriteUtil.p(paramParcel);
+        ParcelWriteUtil.c(paramParcel, 1, paramStatus.getStatusCode());
+        ParcelWriteUtil.c(paramParcel, 1000, paramStatus.getVersionCode());
+        ParcelWriteUtil.a(paramParcel, 2, paramStatus.getStatusMessage_dF(), false);
+        ParcelWriteUtil.a(paramParcel, 3, paramStatus.getPendingIntent_dE(), paramInt, false);
+        ParcelWriteUtil.D(paramParcel, i);
     }
 }

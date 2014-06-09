@@ -3,7 +3,7 @@ package com.fireflycast.cast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.fireflycast.client.internal.DoubleAndLongConverter_dr;
+import com.fireflycast.client.internal.DoubleAndLongConverter;
 
 public final class MediaStatus {
 
@@ -137,7 +137,7 @@ public final class MediaStatus {
 			}
 		}
 		if ((json.has("currentTime")) && ((updateMask & 0x2) == 0)) {
-			long currentTime = DoubleAndLongConverter_dr.double2long_b(json
+			long currentTime = DoubleAndLongConverter.double2long_b(json
 					.getDouble("currentTime"));
 			if (currentTime != mCurrentTime_xc) {
 				this.mCurrentTime_xc = currentTime;

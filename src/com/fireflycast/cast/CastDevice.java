@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.os.Parcel;
 
 import com.fireflycast.cast.images.WebImage;
-import com.fireflycast.server.cast.mdns.CastDeviceHelper_atr;
-import com.fireflycast.server.common.checker.ObjEqualChecker_avo;
+import com.fireflycast.server.cast.mdns.CastDeviceHelper;
+import com.fireflycast.server.common.checker.ObjEqualChecker;
 import com.fireflycast.server.common.internal.safeparcel.SafeParcelable;
 
 import java.net.Inet4Address;
@@ -57,11 +57,11 @@ public class CastDevice implements SafeParcelable {
 		return j;
 	}
 
-	public static CastDeviceHelper_atr a(String deviceId,
+	public static CastDeviceHelper a(String deviceId,
 			Inet4Address inet4address) {
 		CastDevice castdevice = new CastDevice();
 		castdevice.getClass();
-		return new CastDeviceHelper_atr(castdevice, deviceId, inet4address);
+		return new CastDeviceHelper(castdevice, deviceId, inet4address);
 	}
 
 	public static String setDeviceId_a(CastDevice castdevice, String deviceID) {
@@ -151,7 +151,7 @@ public class CastDevice implements SafeParcelable {
 	        return false;
 	      if (getDeviceId() == null)
 	        return (castDevice.getDeviceId() == null);
-	      return ObjEqualChecker_avo.isEquals_a(getDeviceId(), castDevice.getDeviceId());
+	      return ObjEqualChecker.isEquals_a(getDeviceId(), castDevice.getDeviceId());
 
 	}
 
@@ -173,16 +173,16 @@ public class CastDevice implements SafeParcelable {
 				return false;
 			}
 		}
-		if (ObjEqualChecker_avo.isEquals_a(mDeviceId_c, castdevice.mDeviceId_c)
-				&& ObjEqualChecker_avo.isEquals_a(mHost_d, castdevice.mHost_d)
-				&& ObjEqualChecker_avo.isEquals_a(mModleName_f,
+		if (ObjEqualChecker.isEquals_a(mDeviceId_c, castdevice.mDeviceId_c)
+				&& ObjEqualChecker.isEquals_a(mHost_d, castdevice.mHost_d)
+				&& ObjEqualChecker.isEquals_a(mModleName_f,
 						castdevice.mModleName_f)
-				&& ObjEqualChecker_avo.isEquals_a(mFriendlyName_e,
+				&& ObjEqualChecker.isEquals_a(mFriendlyName_e,
 						castdevice.mFriendlyName_e)
-				&& ObjEqualChecker_avo.isEquals_a(mDeviceVersion_g,
+				&& ObjEqualChecker.isEquals_a(mDeviceVersion_g,
 						castdevice.mDeviceVersion_g)
 				&& mServicePort_h == castdevice.mServicePort_h
-				&& ObjEqualChecker_avo.isEquals_a(mIconList_i,
+				&& ObjEqualChecker.isEquals_a(mIconList_i,
 						castdevice.mIconList_i)) {
 			return true;
 		}

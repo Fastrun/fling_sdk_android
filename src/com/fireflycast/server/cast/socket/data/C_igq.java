@@ -322,17 +322,17 @@ public final class C_igq {
         }
     }
 
-    public final BinaryPayload_igp f() throws IOException
+    public final BinaryPayload f() throws IOException
     {
         int i1 = h();
         if (i1 <= b - d && i1 > 0)
         {
-            BinaryPayload_igp igp1 = BinaryPayload_igp.a(a, d, i1);
+            BinaryPayload igp1 = BinaryPayload.a(a, d, i1);
             d = i1 + d;
             return igp1;
         } else
         {
-            return BinaryPayload_igp.a(c(i1));
+            return BinaryPayload.a(c(i1));
         }
     }
 

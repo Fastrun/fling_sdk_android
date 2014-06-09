@@ -7,13 +7,13 @@ import android.os.Parcelable;
 
 import com.fireflycast.server.common.images.WebImage;
 import com.fireflycast.server.common.internal.safeparcel.SafeParcelable;
-import com.fireflycast.server.utils.ApplicationMetadataPriv_ato;
+import com.fireflycast.server.utils.ApplicationMetadataPriv;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class ApplicationMetadata implements SafeParcelable {
-    public static final Parcelable.Creator<ApplicationMetadata> CREATOR = new ApplicationMetadataCreator_atp();
+    public static final Parcelable.Creator<ApplicationMetadata> CREATOR = new ApplicationMetadataCreator();
 
     public String mApplicationId_a;
     String mName_b;
@@ -42,11 +42,11 @@ public final class ApplicationMetadata implements SafeParcelable {
         mSenderAppLaunchUrl_f = senderAppLaunchUrl;
     }
 
-    public static ApplicationMetadataPriv_ato getPrivateData_a(String applicationId)
+    public static ApplicationMetadataPriv getPrivateData_a(String applicationId)
     {
         ApplicationMetadata applicationmetadata = new ApplicationMetadata();
         applicationmetadata.getClass();
-        return new ApplicationMetadataPriv_ato(applicationmetadata, applicationId);
+        return new ApplicationMetadataPriv(applicationmetadata, applicationId);
     }
 
     public static void setSenderAppLaunchUrl_a(ApplicationMetadata applicationmetadata, Uri uri)
@@ -117,6 +117,6 @@ public final class ApplicationMetadata implements SafeParcelable {
 
     public final void writeToParcel(Parcel out, int flags)
     {
-        ApplicationMetadataCreator_atp.buildParcel_a(this, out, flags);
+        ApplicationMetadataCreator.buildParcel_a(this, out, flags);
     }
 }

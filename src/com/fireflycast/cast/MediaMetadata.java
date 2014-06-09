@@ -17,7 +17,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.fireflycast.cast.images.WebImage;
-import com.fireflycast.client.internal.MetadataUtils_dz;
+import com.fireflycast.client.internal.MetadataUtils;
 
 /*
  * MediaMetadata.smali : OK
@@ -162,13 +162,13 @@ public class MediaMetadata {
 	public void putDate(String key, Calendar value) {
 		checkValueType_d(key, VALUE_TYPE_ISO_8601_STRING);
 		this.mBundle
-				.putString(key, MetadataUtils_dz.getDateByCalendar_a(value));
+				.putString(key, MetadataUtils.getDateByCalendar_a(value));
 	}
 
 	public Calendar getDate(String key) {
 		checkValueType_d(key, VALUE_TYPE_ISO_8601_STRING);
 		String str = this.mBundle.getString(key);
-		return ((str != null) ? MetadataUtils_dz.getCalendarByDate_V(str)
+		return ((str != null) ? MetadataUtils.getCalendarByDate_V(str)
 				: null);
 	}
 
@@ -196,7 +196,7 @@ public class MediaMetadata {
 			json.put("metadataType", this.mMediaType);
 		} catch (JSONException e) {
 		}
-		MetadataUtils_dz.writeToJson_a(json, this.mImages);
+		MetadataUtils.writeToJson_a(json, this.mImages);
 		switch (this.mMediaType) {
 		case MEDIA_TYPE_GENERIC:
 			writeToJson_a(json, new String[] {
@@ -255,7 +255,7 @@ public class MediaMetadata {
 			this.mMediaType = json.getInt("metadataType");
 		} catch (JSONException localJSONException) {
 		}
-		MetadataUtils_dz.getWebImageListFromJson_a(this.mImages, json);
+		MetadataUtils.getWebImageListFromJson_a(this.mImages, json);
 		switch (this.mMediaType) {
 		case MEDIA_TYPE_GENERIC:
 			writeToBundle_b(json, new String[] {
@@ -366,7 +366,7 @@ public class MediaMetadata {
 									break;
 								case VALUE_TYPE_ISO_8601_STRING:
 									if (localObject1 instanceof String) {
-										Calendar localCalendar = MetadataUtils_dz
+										Calendar localCalendar = MetadataUtils
 												.getCalendarByDate_V((String) localObject1);
 										if (localCalendar != null)
 											this.mBundle.putString(str2,

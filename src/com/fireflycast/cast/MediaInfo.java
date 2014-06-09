@@ -5,9 +5,9 @@ import org.json.JSONObject;
 
 import android.text.TextUtils;
 
-import com.fireflycast.client.internal.DoubleAndLongConverter_dr;
-import com.fireflycast.client.internal.StringBuilder_ep;
-import com.fireflycast.client.internal.JsonComparer_fp;
+import com.fireflycast.client.internal.DoubleAndLongConverter;
+import com.fireflycast.client.internal.MyStringBuilder;
+import com.fireflycast.client.internal.JsonComparer;
 
 /*
  * MediaInfo.smali : OK
@@ -51,7 +51,7 @@ public final class MediaInfo {
 			this.mMediaMetadata_wN = new MediaMetadata(i);
 			this.mMediaMetadata_wN.writeToBundle_b(localJSONObject);
 		}
-		this.mDuration_wO = DoubleAndLongConverter_dr.double2long_b(json.optDouble("duration", 0.0D));
+		this.mDuration_wO = DoubleAndLongConverter.double2long_b(json.optDouble("duration", 0.0D));
 		this.mCustomData_wP = json.optJSONObject("customData");
 	}
 
@@ -144,7 +144,7 @@ public final class MediaInfo {
 			if (this.mMediaMetadata_wN != null) {
 				json.put("metadata", this.mMediaMetadata_wN.buildJson_cT());
 			}
-			json.put("duration", DoubleAndLongConverter_dr.long2double_l(this.mDuration_wO));
+			json.put("duration", DoubleAndLongConverter.long2double_l(this.mDuration_wO));
 			if (this.mCustomData_wP != null) {
 				json.put("customData", this.mCustomData_wP);
 			}
@@ -164,18 +164,18 @@ public final class MediaInfo {
 			return false;
 		if ((this.mCustomData_wP != null)
 				&& (mediaInfo.mCustomData_wP != null)
-				&& (!(JsonComparer_fp.compare_d(this.mCustomData_wP, mediaInfo.mCustomData_wP))))
+				&& (!(JsonComparer.compare_d(this.mCustomData_wP, mediaInfo.mCustomData_wP))))
 			return false;
-		return ((DoubleAndLongConverter_dr.compare_a(this.mContentId_wK, mediaInfo.mContentId_wK))
+		return ((DoubleAndLongConverter.compare_a(this.mContentId_wK, mediaInfo.mContentId_wK))
 				&& (this.mStreamType_wL == mediaInfo.mStreamType_wL)
-				&& (DoubleAndLongConverter_dr.compare_a(this.mContentType_wM,
+				&& (DoubleAndLongConverter.compare_a(this.mContentType_wM,
 						mediaInfo.mContentType_wM))
-				&& (DoubleAndLongConverter_dr.compare_a(this.mMediaMetadata_wN,
+				&& (DoubleAndLongConverter.compare_a(this.mMediaMetadata_wN,
 						mediaInfo.mMediaMetadata_wN)) && (this.mDuration_wO == mediaInfo.mDuration_wO));
 	}
 
 	public int hashCode() {
-		return StringBuilder_ep.hashCode(new Object[] { this.mContentId_wK,
+		return MyStringBuilder.hashCode(new Object[] { this.mContentId_wK,
 				Integer.valueOf(this.mStreamType_wL), this.mContentType_wM,
 				this.mMediaMetadata_wN, Long.valueOf(this.mDuration_wO),
 				String.valueOf(this.mCustomData_wP) });

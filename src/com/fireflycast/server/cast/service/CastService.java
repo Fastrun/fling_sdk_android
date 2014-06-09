@@ -7,19 +7,19 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 
-import com.fireflycast.server.cast.bridge.CastConnectedClient_ayc;
-import com.fireflycast.server.cast.bridge.CastServerBinder_ayf;
-import com.fireflycast.server.utils.Logs_avu;
+import com.fireflycast.server.cast.bridge.CastConnectedClient;
+import com.fireflycast.server.cast.bridge.CastServerBinder;
+import com.fireflycast.server.utils.Logs;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CastService extends Service {
-    private static final Logs_avu mLogs_a = new Logs_avu("CastService");
+    private static final Logs mLogs_a = new Logs("CastService");
     private Handler mHandler_b;
     private List mList_c;
 
-    public static Logs_avu getLogs_a()
+    public static Logs getLogs_a()
     {
         return mLogs_a;
     }
@@ -29,13 +29,13 @@ public class CastService extends Service {
         return castservice.mList_c;
     }
 
-    private synchronized void removeCastSrvController_a(CastConnectedClient_ayc ayc)
+    private synchronized void removeCastSrvController_a(CastConnectedClient ayc)
     {
         mList_c.remove(ayc);
     }
 
     public static void removeCastSrvController_a(CastService castservice,
-            CastConnectedClient_ayc ayc)
+            CastConnectedClient ayc)
     {
         castservice.removeCastSrvController_a(ayc);
     }
@@ -52,7 +52,7 @@ public class CastService extends Service {
         }
 
         mLogs_a.d("onBind!!!!", new Object[0]);
-        return (new CastServerBinder_ayf(this, (byte) 0)).asBinder();
+        return (new CastServerBinder(this, (byte) 0)).asBinder();
     }
 
     public void onCreate() {

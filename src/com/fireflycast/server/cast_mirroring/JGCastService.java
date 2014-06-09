@@ -25,7 +25,7 @@ public class JGCastService {
         if (looper == null)
             looper = Looper.getMainLooper();
         if (looper != null)
-            mEventHandler = new JGCastServiceHandler_ayz(this, looper);
+            mEventHandler = new JGCastServiceHandler(this, looper);
         native_setup(new WeakReference(this), context);
     }
 

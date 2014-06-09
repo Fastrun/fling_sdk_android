@@ -9,14 +9,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.fireflycast.client.common.internal.safeparcel.SafeParcelable;
-import com.fireflycast.client.internal.StringBuilder_ep;
+import com.fireflycast.client.internal.MyStringBuilder;
 
 /*
  * WebImage.smali : OK
  */
 public class WebImage implements SafeParcelable {
 
-    public static final Parcelable.Creator<WebImage> CREATOR = new WebImageCreator_b();
+    public static final Parcelable.Creator<WebImage> CREATOR = new WebImageCreator();
     private final int mVersionCode_wj;
     private final Uri mUrl_AR;
     private final int mWidth_w;
@@ -101,12 +101,12 @@ public class WebImage implements SafeParcelable {
         if ((other == null) || (!(other instanceof WebImage)))
             return false;
         WebImage localWebImage = (WebImage) other;
-        return ((StringBuilder_ep.compare(this.mUrl_AR, localWebImage.mUrl_AR))
+        return ((MyStringBuilder.compare(this.mUrl_AR, localWebImage.mUrl_AR))
                 && (this.mWidth_w == localWebImage.mWidth_w) && (this.mHeight_v == localWebImage.mHeight_v));
     }
 
     public int hashCode() {
-        return StringBuilder_ep.hashCode(new Object[] {
+        return MyStringBuilder.hashCode(new Object[] {
                 this.mUrl_AR, Integer.valueOf(this.mWidth_w),
                 Integer.valueOf(this.mHeight_v)
         });
@@ -117,7 +117,7 @@ public class WebImage implements SafeParcelable {
     }
 
     public void writeToParcel(Parcel out, int flags) {
-        WebImageCreator_b.buildParcel_a(this, out, flags);
+        WebImageCreator.buildParcel_a(this, out, flags);
     }
 
 }

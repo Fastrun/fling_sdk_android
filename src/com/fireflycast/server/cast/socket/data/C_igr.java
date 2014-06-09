@@ -58,7 +58,7 @@ public final class C_igr {
         return (0x8000000000000000L & l) != 0L ? 10 : 9;
     }
 
-    public static int a(BinaryPayload_igp igp1)
+    public static int a(BinaryPayload igp1)
     {
         return d(igp1.getLength_a()) + igp1.getLength_a();
     }
@@ -120,7 +120,7 @@ public final class C_igr {
         return d(C_igv.a(i, 0));
     }
 
-    public static int b(int i, BinaryPayload_igp igp1)
+    public static int b(int i, BinaryPayload igp1)
     {
         return b(i) + a(igp1);
     }
@@ -278,7 +278,7 @@ public final class C_igr {
         b(l);
     }
 
-    public final void a(int i, BinaryPayload_igp igp1) throws IOException
+    public final void a(int i, BinaryPayload igp1) throws IOException
     {
         g(i, 2);
         byte abyte0[] = igp1.b();
