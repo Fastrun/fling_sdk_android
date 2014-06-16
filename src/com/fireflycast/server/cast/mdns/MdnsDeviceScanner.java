@@ -169,7 +169,7 @@ public final class MdnsDeviceScanner extends DeviceScanner {
                         deviceId = localObject5;
                     else if ("md".equalsIgnoreCase(str5))
                         str1 = ((String) localObject5).replaceAll(
-                                "(Eureka|Chromekey)( Dongle)?", "Chromecast");
+                                "(Eureka|Chromekey)( Dongle)?", "CastAway");
                     else if ("ve".equalsIgnoreCase(str5))
                         localObject2 = localObject5;
                     else if (!"ic".equalsIgnoreCase(str5)) {

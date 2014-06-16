@@ -169,7 +169,7 @@ public abstract class DeviceAuthChannel extends CastChannel {
                     .generateCertificate(new ByteArrayInputStream(abyte0))
                     .getPublicKey();
         } catch (CertificateException certificateexception) {
-            Log.w("DeviceAuthChannel", "Chromecast ICA cert.",
+            Log.w("DeviceAuthChannel", "CastAway ICA cert.",
                     certificateexception);
         }
     }
