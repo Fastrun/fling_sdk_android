@@ -1,4 +1,4 @@
--injars fireflycastsdk.jar
+-injars matchstick.jar
 -outjars bbb.jar
 
 -libraryjars support/android-support-v4.jar
