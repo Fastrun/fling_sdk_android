@@ -153,8 +153,7 @@ final class FlingDeviceManager implements FlingSocketListener {
             sendMessage(
                     "urn:x-cast:com.google.cast.tp.connection",
                     (new JSONObject()).put("type", "CONNECT")
-                            .put("package", DeviceFilter.b(mDeviceFilter))
-                            .put("origin", new JSONObject())
+                            .put("origin", new JSONObject().put("package", DeviceFilter.b(mDeviceFilter)))
                             .toString());
 
             if (!mNoApp)
