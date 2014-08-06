@@ -8,7 +8,7 @@ public abstract class C_igu {
     {
     }
 
-    public final byte[] K()
+    public final byte[] build()
     {
         byte abyte0[] = new byte[c()];
         a(abyte0, 0, abyte0.length);

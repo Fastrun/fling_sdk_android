@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -746,7 +747,7 @@ public final class FlingDeviceController implements FlingSocketListener {
             onSocketError(FlingStatusCodes.NETWORK_ERROR); // 7
             return;
         }
-        byte abyte0[] = (new C_axm()).a(0).a(p).b(transId).c(namespace).b(0).d(message).K();
+        byte abyte0[] = (new C_axm()).protocolVersion(0).sourceId(p).destinationId(transId).namespace(namespace).payloadType(0).payloadMessage(message).build();
         try {
             if (abyte0.length > 0x10000)
             {
@@ -798,8 +799,8 @@ public final class FlingDeviceController implements FlingSocketListener {
             return;
         }
         sendMessage(
-                ByteBuffer.wrap((new C_axm()).a(0).a(p).b(transId).c(nameSpace).b(1)
-                        .a(BinaryPayload.a(message)).K()),
+                ByteBuffer.wrap((new C_axm()).protocolVersion(0).sourceId(p).destinationId(transId).namespace(nameSpace).payloadType(1)
+                        .payloadBinary(BinaryPayload.a(message)).build()),
                 nameSpace, requestId);
         return;
     }

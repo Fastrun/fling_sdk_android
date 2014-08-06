@@ -54,7 +54,7 @@ public abstract class DeviceAuthChannel extends FlingChannel {
     public final void doDeviceAuth() {
         C_axr axr1 = new C_axr();
         axr1.a(new C_axo());
-        sendBinaryMessage(axr1.K(), mTransId);
+        sendBinaryMessage(axr1.build(), mTransId);
     }
 
     protected abstract void verifyDevAuthResult(int i);

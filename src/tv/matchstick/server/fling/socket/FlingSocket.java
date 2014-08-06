@@ -14,6 +14,7 @@ import java.nio.channels.SocketChannel;
 
 import javax.net.ssl.SSLException;
 
+import tv.matchstick.fling.Fling;
 import tv.matchstick.server.common.exception.C_atq;
 import tv.matchstick.server.common.exception.C_auf;
 import tv.matchstick.server.fling.socket.data.C_axm;
@@ -21,7 +22,8 @@ import tv.matchstick.server.utils.LOG;
 
 public final class FlingSocket {
     private static final LOG mLogs = new LOG("FlingSocket");
-    private static final boolean DEBUG = false;
+    private static final int SAMPLE_SOCKET_PORT = 8011;
+    private static final boolean DEBUG = true;
     private final FlingSocketListener mSocketListener;
     private SocketChannel mSocketChannel;
     private SocketBuf mReadSocketBuf;
@@ -94,7 +96,8 @@ public final class FlingSocket {
         try {
             mFlingSocketMultiplexer.init();
             mLogs.d("Connecting to %s:%d", hostAddr, port);
-            mInetSocketAddress = new InetSocketAddress(hostAddr, port);
+            int socketPort = (Fling.getFlingSocketMode() == Fling.FlingSocketMode.TLS) ? port : SAMPLE_SOCKET_PORT;
+            mInetSocketAddress = new InetSocketAddress(hostAddr, socketPort);
             mTimeoutTime = 50000L;// 5000L;
             m = 2000L;
             mFlingSocketMultiplexer.doConnect(this);
@@ -117,13 +120,26 @@ public final class FlingSocket {
                 flag = false;
             } else {
                 mReadSocketBuf.d = mReadSocketBuf.b;
-                if (mReadSocketBuf.d() < 4) {
-                    long1 = null;
+                String str = null;
+                if (mSSLSocketEngine == null) {
+                    byte abyte0[] = new byte[mReadSocketBuf.c];
+                    System.arraycopy(mReadSocketBuf.a, 0, abyte0, 0, mReadSocketBuf.c);
+                    str = new String(abyte0, "utf-8");
+                    android.util.Log.d("FlingSocket", "read string : " + str);
+                    String[] subStr = str.split(":");
+                    long1 = Long.valueOf(subStr[0]);
+                    for (int i = 0; i < subStr[0].length() + 1; i++) {
+                        mReadSocketBuf.f();
+                    }
                 } else {
-                    // cond_2
-                    long1 = Long.valueOf((long) (0xff & mReadSocketBuf.f()) << 24
-                            | (long) (0xff & mReadSocketBuf.f()) << 16
-                            | (long) (0xff & mReadSocketBuf.f()) << 8 | (long) (0xff & mReadSocketBuf.f()));
+                    if (mReadSocketBuf.d() < 4) {
+                        long1 = null;
+                    } else {
+                        // cond_2
+                        long1 = Long.valueOf((long) (0xff & mReadSocketBuf.f()) << 24
+                                | (long) (0xff & mReadSocketBuf.f()) << 16
+                                | (long) (0xff & mReadSocketBuf.f()) << 8 | (long) (0xff & mReadSocketBuf.f()));
+                    }
                 }
                 // :goto_1
                 if (long1 == null)
@@ -134,7 +150,6 @@ public final class FlingSocket {
                     if (long1.longValue() > (long) g) {
                         throw new IOException("invalid message size received");
                     }
-
                     // cond_4
                     if ((long) mReadSocketBuf.d() >= long1.longValue()) {
                         // cond_5
@@ -164,8 +179,17 @@ public final class FlingSocket {
                             }
                         }
                         // cond_6
-                        payload("received", ByteBuffer.wrap(abyte0));
-                        mSocketListener.onMessageReceived(ByteBuffer.wrap(abyte0));
+                        if (mSSLSocketEngine == null) {
+                            String message = new String(abyte0, "utf-8");
+                            android.util.Log.d("FlingSocket", "received message : " + message);
+                            C_axm msg = new C_axm();
+                            msg.parseJson(message);
+                            payload("received", ByteBuffer.wrap(msg.build()));
+                            mSocketListener.onMessageReceived(ByteBuffer.wrap(msg.build()));
+                        } else {
+                            payload("received", ByteBuffer.wrap(abyte0));
+                            mSocketListener.onMessageReceived(ByteBuffer.wrap(abyte0));
+                        }
                         continue;
                     } else {
                         flag = true;
@@ -208,15 +232,18 @@ public final class FlingSocket {
     final synchronized SocketChannel startConnecd() throws IOException
     {
         mLogs.d("startConnect");
-
         // try {
         mBeginConnectTime = SystemClock.elapsedRealtime();
         mSocketChannel = SocketChannel.open();
         mSocketChannel.configureBlocking(false);
         mReadSocketBuf = new SocketBuf();
         mWriteSocketBuf = new SocketBuf();
-        mSSLSocketEngine = new SSLSocketEngine(mSocketChannel,
-                mReadSocketBuf, mWriteSocketBuf);
+        if (Fling.getFlingSocketMode() == Fling.FlingSocketMode.TLS) {
+            mSSLSocketEngine = new SSLSocketEngine(mSocketChannel,
+                    mReadSocketBuf, mWriteSocketBuf);
+        } else {
+            mSSLSocketEngine = null;
+        }
         if (mSocketChannel.connect(mInetSocketAddress))
         {
             if (mSSLSocketEngine == null) {
@@ -246,25 +273,40 @@ public final class FlingSocket {
         if (bytebuffer == null)
             throw new IllegalArgumentException("message cannot be null");
 
-        // try {
-        if (this.mWriteSocketBuf.c() < 4 + bytebuffer.remaining())
-            throw new C_atq();
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // return;
-        // }
+        payload("send", bytebuffer);
 
-        long remainingCount = bytebuffer.remaining();
-        if (mWriteSocketBuf.c() >= 4)
-        {
-            if ((remainingCount < 0L) || (remainingCount > 0xffffffffL))
-                throw new C_auf(remainingCount + " is not a valid uint32 value");
-            mWriteSocketBuf.a((byte) (int) (0xFF & remainingCount >> 24));
-            mWriteSocketBuf.a((byte) (int) (0xFF & remainingCount >> 16));
-            mWriteSocketBuf.a((byte) (int) (0xFF & remainingCount >> 8));
-            mWriteSocketBuf.a((byte) (int) (remainingCount & 0xFF));
+        // sample
+        if (mSSLSocketEngine == null) {
+            StringBuffer sb = new StringBuffer();
+            C_axm axm1 = C_axm.a(bytebuffer.array());
+            String json = axm1.buildJson().toString();
+            int length = json.getBytes("utf-8").length;
+            sb.append(length);
+            sb.append(":");
+            sb.append(json);
+            android.util.Log.d("FlingSocket", "send message : " + sb.toString());
+            byte[] message = sb.toString().getBytes("utf-8");
+            bytebuffer = ByteBuffer.wrap(message);
+        } else {
+            // try {
+            if (this.mWriteSocketBuf.c() < 4 + bytebuffer.remaining())
+                throw new C_atq();
+            // } catch (Exception e) {
+            // e.printStackTrace();
+            // return;
+            // }
+    
+            long remainingCount = bytebuffer.remaining();
+            if (mWriteSocketBuf.c() >= 4)
+            {
+                if ((remainingCount < 0L) || (remainingCount > 0xffffffffL))
+                    throw new C_auf(remainingCount + " is not a valid uint32 value");
+                mWriteSocketBuf.a((byte) (int) (0xFF & remainingCount >> 24));
+                mWriteSocketBuf.a((byte) (int) (0xFF & remainingCount >> 16));
+                mWriteSocketBuf.a((byte) (int) (0xFF & remainingCount >> 8));
+                mWriteSocketBuf.a((byte) (int) (remainingCount & 0xFF));
+            }
         }
-
         byte[] sendBuf = bytebuffer.array();
         int pos = bytebuffer.position();
         int remain = bytebuffer.remaining();
@@ -298,7 +340,6 @@ public final class FlingSocket {
             System.arraycopy(sendBuf, currentPos, mWriteSocketBuf.a, mWriteSocketBuf.c, remainedCount);
             mWriteSocketBuf.b(remainedCount);
         }
-        payload("send", bytebuffer);
         this.mFlingSocketMultiplexer.wakeup();
     }
 
@@ -310,7 +351,6 @@ public final class FlingSocket {
             n = false;
             return false;
         }
-
         int mode = 0;
         switch (mSocketStatus) {
             case 1: // conncting?
@@ -466,7 +506,6 @@ public final class FlingSocket {
                     if (i1 <= 0) {
                         throw new ClosedChannelException();
                     }
-
                     mReadSocketBuf.b(i1);
                 }
             } else {
@@ -504,7 +543,6 @@ public final class FlingSocket {
         try {
             if (mSSLSocketEngine == null) {
                 if (!mWriteSocketBuf.e) {
-
                     int i1 = (int) mSocketChannel.write(mWriteSocketBuf.a());
                     if (i1 <= 0) {
                         // cond_2

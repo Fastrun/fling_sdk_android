@@ -73,8 +73,8 @@ final class FlingDeviceManager implements FlingSocketListener {
     private void sendMessage(String namespace, String message) throws Exception
     {
         DeviceFilter.getLogs().d("Sending text message to %s: (ns=%s, dest=%s) %s", mFlingDevice.getFriendlyName(), namespace, "receiver-0", message);
-        C_axm axm1 = (new C_axm()).a(0).a(g).b("receiver-0").c(namespace).b(0).d(message);
-        mFlingSocket.send(ByteBuffer.wrap(axm1.K()));
+        C_axm axm1 = (new C_axm()).protocolVersion(0).sourceId(g).destinationId("receiver-0").namespace(namespace).payloadType(0).payloadMessage(message);
+        mFlingSocket.send(ByteBuffer.wrap(axm1.build()));
     }
 
     private void setNoApp()

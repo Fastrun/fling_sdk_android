@@ -3,6 +3,11 @@ package tv.matchstick.server.fling.socket.data;
 
 import java.io.IOException;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Base64;
+
 public final class C_axm extends C_igu {
     private boolean a;
     private int protocolVersion;
@@ -45,27 +50,75 @@ public final class C_axm extends C_igu {
                 + "  payload_utf8:" + payloadUtf8 + "\n"
                 + "}";
     }
+    
+    public JSONObject buildJson() {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("protocolVersion", protocolVersion);
+            obj.put("sourceId", sourceId);
+            obj.put("destinationId", destinationId);
+            obj.put("namespace", namespace_p);
+            if (payloadType == 0) {
+                obj.put("payloadType", "STRING");
+                obj.put("payloadUtf8", payloadUtf8);
+            } else {
+                obj.put("payloadType", "BINARY");
+                obj.put("payloadBinary", Base64.encode(payloadBinary.b(), Base64.DEFAULT));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return obj;
+    }
+    
+    public void parseJson(String json) {
+        JSONObject obj;
+        try {
+            obj = new JSONObject(json);
+            if (obj.has("protocolVersion"))
+                protocolVersion(obj.optInt("protocolVersion"));
+            if (obj.has("sourceId"))
+                sourceId(obj.optString("sourceId"));
+            if (obj.has("destinationId"))
+                destinationId(obj.optString("destinationId"));
+            if (obj.has("namespace"))
+                namespace(obj.optString("namespace"));
+            String type = null;
+            if (obj.has("payloadType"))
+                type = obj.optString("payloadType");
+            if (type.equals("STRING")) {
+                payloadType(0);
+                payloadMessage(obj.optString("payloadUtf8"));
+            } else {
+                payloadType(1);
+                payloadBinary(BinaryPayload.a(Base64.decode(obj.optString("payloadBinary"), Base64.DEFAULT)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+       
+    }
 
     public static C_axm a(byte abyte0[])
     {
         return (C_axm) (new C_axm()).b(abyte0);
     }
 
-    public final C_axm a(int version)
+    public final C_axm protocolVersion(int version)
     {
         a = true;
         protocolVersion = version;
         return this;
     }
 
-    public final C_axm a(BinaryPayload igp1)
+    public final C_axm payloadBinary(BinaryPayload igp1)
     {
         m = true;
         payloadBinary = igp1;
         return this;
     }
 
-    public final C_axm a(String s)
+    public final C_axm sourceId(String s)
     {
         c = true;
         sourceId = s;
@@ -88,31 +141,31 @@ public final class C_axm extends C_igu {
                     return this;
 
                 case 8: // '\b'
-                    a(igq1.h());
+                    protocolVersion(igq1.h());
                     break;
 
                 case 18: // '\022'
-                    a(igq1.e());
+                    sourceId(igq1.e());
                     break;
 
                 case 26: // '\032'
-                    b(igq1.e());
+                    destinationId(igq1.e());
                     break;
 
                 case 34: // '"'
-                    c(igq1.e());
+                    namespace(igq1.e());
                     break;
 
                 case 40: // '('
-                    b(igq1.h());
+                    payloadType(igq1.h());
                     break;
 
                 case 50: // '2'
-                    d(igq1.e());
+                    payloadMessage(igq1.e());
                     break;
 
                 case 58: // ':'
-                    a(igq1.f());
+                    payloadBinary(igq1.f());
                     break;
             }
         } while (true);
@@ -148,14 +201,14 @@ public final class C_axm extends C_igu {
         return mTotalLen;
     }
 
-    public final C_axm b(int i1)
+    public final C_axm payloadType(int i1)
     {
         i = true;
         payloadType = i1;
         return this;
     }
 
-    public final C_axm b(String transId)
+    public final C_axm destinationId(String transId)
     {
         e = true;
         destinationId = transId;
@@ -184,7 +237,7 @@ public final class C_axm extends C_igu {
         return i1;
     }
 
-    public final C_axm c(String namespace)
+    public final C_axm namespace(String namespace)
     {
         g = true;
         namespace_p = namespace;
@@ -196,7 +249,7 @@ public final class C_axm extends C_igu {
         return payloadType;
     }
 
-    public final C_axm d(String message)
+    public final C_axm payloadMessage(String message)
     {
         k = true;
         payloadUtf8 = message;
