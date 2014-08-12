@@ -180,6 +180,9 @@ public final class MdnsDeviceScanner extends DeviceScanner {
                                     localObject1
                             }))));
                 }
+                
+                deviceId = deviceId + localInet4Address1.getHostAddress();
+                
                 FlingDeviceHelper localatr = FlingDevice.createHelper((String) deviceId,
                         localInet4Address1);
                 String str3 = info.e;
