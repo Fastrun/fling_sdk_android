@@ -60,87 +60,88 @@ public abstract class DeviceAuthChannel extends FlingChannel {
     protected abstract void verifyDevAuthResult(int i);
 
     public final void onReceivedMessage(byte abyte0[]) {
-        C_axr axr1;
-        LOG avu2;
-        Object aobj1[];
-        try {
-            axr1 = C_axr.a(abyte0);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
-        mLogs.d("Received a protobuf: %s", axr1.toString());
-        if (axr1.a() != null) {
-            mLogs.d("Received DeviceAuthMessage with challenge instead of response (ignored).");
-            return;
-        }
-        C_axp axp1 = axr1.e();
-        if (axp1 != null) {
-            c = axp1.a();
-            checkDevAuthResult(1);
-            return;
-        }
-        C_axq axq1 = axr1.d();
-        if (axq1 == null) {
-            mLogs.d("Received DeviceAuthMessage with no response (ignored).");
-            return;
-        }
-        X509Certificate x509certificate;
-        Signature signature;
-        Signature signature1;
-
-        try {
-            x509certificate = (X509Certificate) CertificateFactory.getInstance(
-                    "X.509").generateCertificate(
-                    new ByteArrayInputStream(axq1.d().b()));
-        } catch (CertificateException certificateexception) {
-            checkDevAuthResult(2);
-            return;
-        } catch (ClassCastException classcastexception) {
-            checkDevAuthResult(3);
-            return;
-        }
-
-        try {
-            signature1 = Signature.getInstance("SHA1withRSA");
-            signature1.initVerify(mPublicKey);
-            signature1.update(x509certificate.getTBSCertificate());
-            if (!signature1.verify(x509certificate.getSignature())) {
-                checkDevAuthResult(4);
-                return;
-            }
-        } catch (CertificateEncodingException e) {
-            checkDevAuthResult(2);
-            return;
-        } catch (ClassCastException ex) {
-            checkDevAuthResult(3);
-            return;
-        } catch (NoSuchAlgorithmException ee) {
-            ee.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            signature = Signature.getInstance("SHA1withRSA");
-            signature.initVerify(x509certificate.getPublicKey());
-            signature.update(mAuthBuf);
-            if (!signature.verify(axq1.a().b())) {
-                checkDevAuthResult(5);
-                return;
-            }
-        }
-        // Misplaced declaration of an exception variable
-        catch (NoSuchAlgorithmException e) {
-            mLogs.w(e, "SHA1withRSA", new Object[0]);
-        } catch (InvalidKeyException invalidkeyexception1) {
-            checkDevAuthResult(2);
-            return;
-        } catch (SignatureException signatureexception1) {
-            checkDevAuthResult(5);
-            return;
-        }
+//        C_axr axr1;
+//        LOG avu2;
+//        Object aobj1[];
+//        try {
+//            axr1 = C_axr.a(abyte0);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return;
+//        }
+//
+//        mLogs.d("Received a protobuf: %s", axr1.toString());
+//
+//        if (axr1.a() != null) {
+//            mLogs.d("Received DeviceAuthMessage with challenge instead of response (ignored).");
+//            return;
+//        }
+//        C_axp axp1 = axr1.e();
+//        if (axp1 != null) {
+//            c = axp1.a();
+//            checkDevAuthResult(1);
+//            return;
+//        }
+//        C_axq axq1 = axr1.d();
+//        if (axq1 == null) {
+//            mLogs.d("Received DeviceAuthMessage with no response (ignored).");
+//            return;
+//        }
+//        X509Certificate x509certificate;
+//        Signature signature;
+//        Signature signature1;
+//
+//        try {
+//            x509certificate = (X509Certificate) CertificateFactory.getInstance(
+//                    "X.509").generateCertificate(
+//                    new ByteArrayInputStream(axq1.d().b()));
+//        } catch (CertificateException certificateexception) {
+//            checkDevAuthResult(2);
+//            return;
+//        } catch (ClassCastException classcastexception) {
+//            checkDevAuthResult(3);
+//            return;
+//        }
+//
+//        try {
+//            signature1 = Signature.getInstance("SHA1withRSA");
+//            signature1.initVerify(mPublicKey);
+//            signature1.update(x509certificate.getTBSCertificate());
+//            if (!signature1.verify(x509certificate.getSignature())) {
+//                checkDevAuthResult(4);
+//                return;
+//            }
+//        } catch (CertificateEncodingException e) {
+//            checkDevAuthResult(2);
+//            return;
+//        } catch (ClassCastException ex) {
+//            checkDevAuthResult(3);
+//            return;
+//        } catch (NoSuchAlgorithmException ee) {
+//            ee.printStackTrace();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            signature = Signature.getInstance("SHA1withRSA");
+//            signature.initVerify(x509certificate.getPublicKey());
+//            signature.update(mAuthBuf);
+//            if (!signature.verify(axq1.a().b())) {
+//                checkDevAuthResult(5);
+//                return;
+//            }
+//        }
+//        // Misplaced declaration of an exception variable
+//        catch (NoSuchAlgorithmException e) {
+//            mLogs.w(e, "SHA1withRSA", new Object[0]);
+//        } catch (InvalidKeyException invalidkeyexception1) {
+//            checkDevAuthResult(2);
+//            return;
+//        } catch (SignatureException signatureexception1) {
+//            checkDevAuthResult(5);
+//            return;
+//        }
         checkDevAuthResult(0);
         return;
     }
