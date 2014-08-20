@@ -61,7 +61,6 @@ abstract class MdnsClient {
                 k = localavj.b();
                 m = localavj.b();
                 n = localavj.b();
-
                 if (j != 1)
                     throw new IOException("invalid response");
             } catch (IOException localIOException) {
@@ -169,10 +168,21 @@ abstract class MdnsClient {
                             localavm.mFlingDeviceInfo.mHost = str3;
 
                             // todo
-
-                            if (arrayOfString.length != 4) {
+                            if (arrayOfString.length < 4) {
                                 throw new IOException(
                                         "invalid name in SRV record");
+                            } else if (arrayOfString.length > 4) {
+                                String[] fixArrayOfString = new String[4];
+                                fixArrayOfString[3] = arrayOfString[arrayOfString.length - 1];
+                                fixArrayOfString[2] = arrayOfString[arrayOfString.length - 2];
+                                fixArrayOfString[1] = arrayOfString[arrayOfString.length - 3];
+                                int nameCount = arrayOfString.length - 3;
+                                String[] name = new String[nameCount];
+                                for (int len = 0; len < nameCount; len++) {
+                                    name[len] = arrayOfString[len];
+                                }
+                                fixArrayOfString[0] = TextUtils.join(".", name);
+                                arrayOfString = fixArrayOfString;
                             }
 
                             String str4 = arrayOfString[0];
