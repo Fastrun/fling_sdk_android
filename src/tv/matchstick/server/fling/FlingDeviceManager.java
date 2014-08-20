@@ -37,7 +37,7 @@ final class FlingDeviceManager implements FlingSocketListener {
 
         mDeviceFilter = deviceFilter;
 
-        mNoApp = false;
+        mNoApp = true;
         mNoNamespace = false;
         e = true;
         mFlingSocket = new FlingSocket(DeviceFilter.getContext_a(deviceFilter), this);
@@ -126,8 +126,9 @@ final class FlingDeviceManager implements FlingSocketListener {
             DiscoveryCriteria criteria = (DiscoveryCriteria) iterator.next();
 
             boolean flag;
-            if ((criteria.mAppid == null || h.mAppAvailabityList.contains(criteria.mAppid))
-                    && h.mAppNamespaceList.containsAll(Collections
+            // if we need setNoApp later, the mAppAvailabityList must contains
+            if (/* (criteria.mAppid == null || h.mAppAvailabityList.contains(criteria.mAppid))
+                    && */h.mAppNamespaceList.containsAll(Collections
                             .unmodifiableSet(criteria.mNamespaceList)))
                 flag = true;
             else
