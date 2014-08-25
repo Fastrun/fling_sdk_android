@@ -4,13 +4,18 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="13"
+        android:minSdkVersion="9"
         android:targetSdkVersion="19" />
 
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:theme="@style/AppTheme" >
-    </application>
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="true" >
+    </uses-feature>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application />
 
 </manifest>
