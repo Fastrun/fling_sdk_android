@@ -326,13 +326,19 @@ abstract class MdnsClient {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            int m;
-            if (k >= 32000) {
-                m = k;
+            // 32000 is default
+            if (k >= 8000) {
+                k = 8000;
             } else {
-                m = k * 2;
-                k = m;
+                k *= 2;
             }
+//            int m;
+//            if (k >= 32000) {
+//                m = k;
+//            } else {
+//                m = k * 2;
+//                k = m;
+//            }
         }
     }
 
