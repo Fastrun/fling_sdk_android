@@ -1257,31 +1257,33 @@ public final class FlingDeviceController implements FlingSocketListener {
 
     public final void releaseReference()
     {
-        boolean flag;
-        if (controlerId.intValue() <= 0) {
-            Object aobj[] = new Object[1];
-            aobj[0] = Boolean.valueOf(mDisposed);
-            log.e("unbalanced call to releaseReference(); mDisposed=%b", aobj);
-            flag = false;
-        } else {
-            Integer integer;
-            integer = Integer.valueOf(-1 + controlerId.intValue());
-            controlerId = integer;
-            if (integer.intValue() == 0)
-                flag = true;
-            else
+        synchronized (controlerId) {
+            boolean flag;
+            if (controlerId.intValue() <= 0) {
+                Object aobj[] = new Object[1];
+                aobj[0] = Boolean.valueOf(mDisposed);
+                log.e("unbalanced call to releaseReference(); mDisposed=%b", aobj);
                 flag = false;
-        }
-
-        if (flag) {
-            mDisposed = true;
-
-            log.d("[%s] *** disposing ***", mFlingDevice);
-            mReconnectStrategy.b();
-            mHandler.removeCallbacks(mHeartbeatRunnable);
-            mHandler.removeCallbacks(mReconnectRunnable);
-            if (mFlingSocket.isConnected()) {
-                mFlingSocket.disconnect();
+            } else {
+                Integer integer;
+                integer = Integer.valueOf(-1 + controlerId.intValue());
+                controlerId = integer;
+                if (integer.intValue() == 0)
+                    flag = true;
+                else
+                    flag = false;
+            }
+    
+            if (flag) {
+                mDisposed = true;
+    
+                log.d("[%s] *** disposing ***", mFlingDevice);
+                mReconnectStrategy.b();
+                mHandler.removeCallbacks(mHeartbeatRunnable);
+                mHandler.removeCallbacks(mReconnectRunnable);
+                if (mFlingSocket.isConnected()) {
+                    mFlingSocket.disconnect();
+                }
             }
         }
     }
