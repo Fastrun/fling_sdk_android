@@ -10,6 +10,7 @@ public final class HeartbeatChannel extends FlingChannel {
     private long mCreateTime;
     private long mTimeout;
     private boolean isPingSent;
+    private int mCounter;
 
     public HeartbeatChannel()
     {
@@ -22,6 +23,7 @@ public final class HeartbeatChannel extends FlingChannel {
     {
         mCreateTime = SystemClock.elapsedRealtime();
         isPingSent = false;
+        mCounter = 0;
     }
 
     public final boolean isTimeout(long currentTime)
@@ -32,12 +34,27 @@ public final class HeartbeatChannel extends FlingChannel {
 
         long elapsedTime;
         elapsedTime = currentTime - mCreateTime;
-        if (elapsedTime >= mTimeout)
-            return true;
+        if (elapsedTime >= mTimeout) {
+            if (mCounter < 5) {
+                android.util.Log.d("HeartbeatChannel", "retry PING: " + mCounter);
+                mLogs.v("retry PING", new Object[0]);
+                sendPing();
+                mCounter++;
+            } else {
+                mCounter = 0;
+                return true;
+            }
+            
+        }
         if (isPingSent || elapsedTime < mTimeout / 2L) {
             return false;
         }
 
+        sendPing();
+        return false;
+    }
+    
+    private void sendPing() {
         JSONObject jsonobject;
         mLogs.v("sending PING", new Object[0]);
         jsonobject = new JSONObject();
@@ -49,7 +66,6 @@ public final class HeartbeatChannel extends FlingChannel {
         }
         sendMessage(jsonobject.toString(), 0L, "transport-0");
         isPingSent = true;
-        return false;
     }
 
     public final void checkReceivedMessage(String message)
