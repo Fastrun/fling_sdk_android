@@ -98,7 +98,7 @@ public final class FlingSocket {
             mLogs.d("Connecting to %s:%d", hostAddr, port);
             int socketPort = (Fling.getFlingSocketMode() == Fling.FlingSocketMode.TLS) ? port : SAMPLE_SOCKET_PORT;
             mInetSocketAddress = new InetSocketAddress(hostAddr, socketPort);
-            mTimeoutTime = 50000L;// 5000L;
+            mTimeoutTime = 10000L;// 5000L;
             m = 2000L;
             mFlingSocketMultiplexer.doConnect(this);
             mSocketStatus = 1; // connecting
@@ -539,7 +539,6 @@ public final class FlingSocket {
     final synchronized boolean onWrite()
     {
         boolean flag = false;
-
         try {
             if (mSSLSocketEngine == null) {
                 if (!mWriteSocketBuf.e) {
