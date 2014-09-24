@@ -264,7 +264,17 @@ public final class MdnsDeviceScanner extends DeviceScanner {
             NetworkInterface localNetworkInterface = (NetworkInterface) localIterator
                     .next();
             
-            MdnsClient flingMdnsClient = new MdnsClient("_googlecast._tcp.local.",localNetworkInterface) {
+            MdnsClient googleMdnsClient = new MdnsClient("_googlecast._tcp.local.",localNetworkInterface) {
+
+                @Override
+                protected void onScanResults(FlingDeviceInfo info) {
+                    // TODO Auto-generated method stub
+                    MdnsDeviceScanner.onScanResults(MdnsDeviceScanner.this, info);
+                }
+                
+            };
+
+            MdnsClient flingMdnsClient = new MdnsClient("_MatchStick._tcp.local.",localNetworkInterface) {
 
                 @Override
                 protected void onScanResults(FlingDeviceInfo info) {
@@ -275,8 +285,10 @@ public final class MdnsDeviceScanner extends DeviceScanner {
             };
 
             try {
+                googleMdnsClient.startScan();
                 flingMdnsClient.startScan();
-                this.mFlingMdnsClientList.add(flingMdnsClient);
+                mFlingMdnsClientList.add(flingMdnsClient);
+                mFlingMdnsClientList.add(googleMdnsClient);
             } catch (Exception localIOException) { // todo
                 mLogs.w("Couldn't start MDNS client for %s",
                         new Object[] {
