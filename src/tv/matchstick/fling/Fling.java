@@ -90,19 +90,6 @@ public class Fling {
 	 */
 	public static final FlingApi FlingApi = new FlingApi.FlingApiImpl();
 
-	public static enum FlingSocketMode {
-	    TLS, SIMPLE;
-    }
-
-	private static FlingSocketMode sFlingSocketMode = FlingSocketMode.TLS;
-
-	public static FlingSocketMode getFlingSocketMode() {
-	    return sFlingSocketMode;
-	}
-
-	public static void setFlingSocketMode(FlingSocketMode mode) {
-	    sFlingSocketMode = mode;
-	}
 	/**
 	 * The entry point for interacting with a Fling device.
 	 */
