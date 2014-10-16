@@ -127,7 +127,7 @@ public class Status implements Result, SafeParcelable {
 	 *
 	 * @return status message
 	 */
-	String getStatusMessage() {
+	public String getStatusMessage() {
 		return mStatusMessage;
 	}
 
@@ -136,7 +136,7 @@ public class Status implements Result, SafeParcelable {
 	 *
 	 * @return version code
 	 */
-	int getVersionCode() {
+	public int getVersionCode() {
 		return mVersionCode;
 	}
 
